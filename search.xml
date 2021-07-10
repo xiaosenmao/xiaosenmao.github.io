@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Docker启动MongoDB容器</title>
+      <link href="/2021/07/10/docker-qi-dong-mongodb-rong-qi/"/>
+      <url>/2021/07/10/docker-qi-dong-mongodb-rong-qi/</url>
+      
+        <content type="html"><![CDATA[<h2 id="安装docker-compose"><a href="#安装docker-compose" class="headerlink" title="安装docker-compose"></a>安装docker-compose</h2><h4 id="参考官网介绍-docker-compose安装"><a href="#参考官网介绍-docker-compose安装" class="headerlink" title="参考官网介绍 docker-compose安装"></a>参考官网介绍 <a href="https://docs.docker.com/compose/install/">docker-compose安装</a></h4><blockquote><ol><li>下载docker-compose：<code>curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose</code></li><li>赋予执行权限：<code>chmod +x /usr/local/bin/docker-compose</code></li><li>测试是否安装成功：<code>docker --version</code></li></ol></blockquote><h2 id="使用docker-compose启动MongoDB容器"><a href="#使用docker-compose启动MongoDB容器" class="headerlink" title="使用docker-compose启动MongoDB容器"></a>使用docker-compose启动MongoDB容器</h2><ol><li>比如在home目录下新建mongotest目录并且进入该目录: <code>mkdir /home/mongotest &amp;&amp; cd /home/mongotest</code></li><li>新建 docker-compose.yml文件: <code>vim docker-compose.yml</code></li><li>写入以下内容<figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.1'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mongo:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mongo</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MONGO_INITDB_ROOT_USERNAME:</span> <span class="string">root</span></span><br><span class="line">      <span class="attr">MONGO_INITDB_ROOT_PASSWORD:</span> <span class="string">example</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="number">27017</span><span class="string">:27017</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">/home/mongotest:/data/db</span></span><br></pre></td></tr></tbody></table></figure></li><li>执行命令： <code>docker-compose up -d</code> 启动一个容器<br><img src="/images/20210710200605.png"></li><li>查看docker容器：<code>docker ps -a</code></li><li>在docker里使用mongo的shell工具连接mongo服务：<code>docker exec -it mongotest_mongo_1 mongo</code></li><li>新建testdb数据库： <code>use testdb</code></li><li>创建一个 dbOwner 角色的用户<br><img src="/images/20210710213257.png"></li><li>进行一些操作<br><img src="/images/20210710221634.png"></li><li>使用GUI工具Robo3T连接成功,注意防火墙放行27017端口，同时注意云服务器的防火墙端口放行规则<br><img src="/images/20210710232119.png"><br><img src="/images/20210710232206.png"><h2 id="MongDB的备份和恢复"><a href="#MongDB的备份和恢复" class="headerlink" title="MongDB的备份和恢复"></a>MongDB的备份和恢复</h2><h4 id="数据备份"><a href="#数据备份" class="headerlink" title="数据备份"></a>数据备份</h4></li><li>执行： <code>docker ps | grep mongotest</code>查看检索mongo容器</li><li>备份：<code>docker exec -it mongotest_mongo_1 mongodump -h localhost -u root -p example -o /tmp/test</code><blockquote><p>-h == –host MongoDB所在服务器地址<br>-u == –username<br>-p == –password<br>-o == –out 指定BSON保存到的目录<br><img src="/images/20210710234354.png"></p></blockquote></li><li>将容器中的数据备份文件拷贝到宿主机上: <code>docker cp e499c3459fbd:/tmp/test /tmp/test</code></li><li>查看结果： <code>cd /tmp &amp;&amp; ls</code><br><img src="/images/20210710234913.png"><h4 id="数据恢复"><a href="#数据恢复" class="headerlink" title="数据恢复"></a>数据恢复</h4></li><li>执行 <code>docker exec -it mongotest_mongo_1 mongorestore -h localhost -u root -p example --dir /tmp/test</code></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Docker </tag>
+            
+            <tag> MongoDB </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>CentOS系统中使用Docker启动MySQL</title>
       <link href="/2021/07/10/centos-xi-tong-zhong-shi-yong-docker-qi-dong-mysql/"/>
       <url>/2021/07/10/centos-xi-tong-zhong-shi-yong-docker-qi-dong-mysql/</url>
@@ -21,8 +48,6 @@
         <tags>
             
             <tag> Docker </tag>
-            
-            <tag> CentOS </tag>
             
             <tag> MySQL </tag>
             

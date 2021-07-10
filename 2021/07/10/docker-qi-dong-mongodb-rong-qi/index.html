@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="第一篇博客, 个人博客 前端 HTML5 CSS">
+    <meta name="keywords" content="Docker启动MongoDB容器, 个人博客 前端 HTML5 CSS">
     <meta name="description" content="个人博客，前端总结">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>第一篇博客 | xiaosenmao的个人博客</title>
+    <title>Docker启动MongoDB容器 | xiaosenmao的个人博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -249,12 +249,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">第一篇博客</h1>
+                    <h1 class="description center-align post-title">Docker启动MongoDB容器</h1>
                 </div>
             </div>
         </div>
@@ -368,12 +368,29 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Docker/">
+                                <span class="chip bg-color">Docker</span>
+                            </a>
+                        
+                            <a href="/tags/MongoDB/">
+                                <span class="chip bg-color">MongoDB</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Docker/" class="post-category">
+                                Docker
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -396,7 +413,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    280
+                    356
                 </div>
                 
 
@@ -423,10 +440,33 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>“It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way— in short, the period was so far like the present period, that some of its noisiest authorities insisted on its being received, for good or for evil, in the superlative degree of comparison only.”<br>― Charles Dickens, A Tale of Two Cities</p>
-<!-- ![Charles Dickens](/images/CharlesDickens.jpg "Charles Dickens") -->
-
-<p>译文：<br>“那是最美好的时代，那是最糟糕的时代；那是智慧的年月，那是愚昧的年月；那是信仰的时期，那是怀疑的时期；那是光明的季节，那是黑暗的季节；那是希望的春天，那是失望的冬天；我们都在直奔天堂，我们全都在直下地狱——简而言之，那时跟现在非常相象，某些最喧嚣的权威坚持要用形容词的最高级来形容它。说它好，是最高级的；说它不好，也是最高级的。”<br>― 查尔斯·狄更斯，双城记</p>
+                <h2 id="安装docker-compose"><a href="#安装docker-compose" class="headerlink" title="安装docker-compose"></a>安装docker-compose</h2><h4 id="参考官网介绍-docker-compose安装"><a href="#参考官网介绍-docker-compose安装" class="headerlink" title="参考官网介绍 docker-compose安装"></a>参考官网介绍 <a target="_blank" rel="noopener" href="https://docs.docker.com/compose/install/">docker-compose安装</a></h4><blockquote>
+<ol>
+<li>下载docker-compose：<code>curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose</code></li>
+<li>赋予执行权限：<code>chmod +x /usr/local/bin/docker-compose</code></li>
+<li>测试是否安装成功：<code>docker --version</code></li>
+</ol>
+</blockquote>
+<h2 id="使用docker-compose启动MongoDB容器"><a href="#使用docker-compose启动MongoDB容器" class="headerlink" title="使用docker-compose启动MongoDB容器"></a>使用docker-compose启动MongoDB容器</h2><ol>
+<li>比如在home目录下新建mongotest目录并且进入该目录: <code>mkdir /home/mongotest &amp;&amp; cd /home/mongotest</code></li>
+<li>新建 docker-compose.yml文件: <code>vim docker-compose.yml</code></li>
+<li>写入以下内容<figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.1'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mongo:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mongo</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MONGO_INITDB_ROOT_USERNAME:</span> <span class="string">root</span></span><br><span class="line">      <span class="attr">MONGO_INITDB_ROOT_PASSWORD:</span> <span class="string">example</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="number">27017</span><span class="string">:27017</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">/home/mongotest:/data/db</span></span><br></pre></td></tr></tbody></table></figure></li>
+<li>执行命令： <code>docker-compose up -d</code> 启动一个容器<br><img src="/images/20210710200605.png"></li>
+<li>查看docker容器：<code>docker ps -a</code></li>
+<li>在docker里使用mongo的shell工具连接mongo服务：<code>docker exec -it mongotest_mongo_1 mongo</code></li>
+<li>新建testdb数据库： <code>use testdb</code></li>
+<li>创建一个 dbOwner 角色的用户<br><img src="/images/20210710213257.png"></li>
+<li>进行一些操作<br><img src="/images/20210710221634.png"></li>
+<li>使用GUI工具Robo3T连接成功,注意防火墙放行27017端口，同时注意云服务器的防火墙端口放行规则<br><img src="/images/20210710232119.png"><br><img src="/images/20210710232206.png"><h2 id="MongDB的备份和恢复"><a href="#MongDB的备份和恢复" class="headerlink" title="MongDB的备份和恢复"></a>MongDB的备份和恢复</h2><h4 id="数据备份"><a href="#数据备份" class="headerlink" title="数据备份"></a>数据备份</h4></li>
+<li>执行： <code>docker ps | grep mongotest</code>查看检索mongo容器</li>
+<li>备份：<code>docker exec -it mongotest_mongo_1 mongodump -h localhost -u root -p example -o /tmp/test</code><blockquote>
+<p>-h == –host MongoDB所在服务器地址<br>-u == –username<br>-p == –password<br>-o == –out 指定BSON保存到的目录<br><img src="/images/20210710234354.png"></p>
+</blockquote>
+</li>
+<li>将容器中的数据备份文件拷贝到宿主机上: <code>docker cp e499c3459fbd:/tmp/test /tmp/test</code></li>
+<li>查看结果： <code>cd /tmp &amp;&amp; ls</code><br><img src="/images/20210710234913.png"><h4 id="数据恢复"><a href="#数据恢复" class="headerlink" title="数据恢复"></a>数据恢复</h4></li>
+<li>执行 <code>docker exec -it mongotest_mongo_1 mongorestore -h localhost -u root -p example --dir /tmp/test</code></li>
+</ol>
 
                 
             </div>
@@ -453,7 +493,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xiaosenmao.github.io/2021/07/10/di-yi-pian-bo-ke/">https://xiaosenmao.github.io/2021/07/10/di-yi-pian-bo-ke/</a>
+                    <a href="https://xiaosenmao.github.io/2021/07/10/docker-qi-dong-mongodb-rong-qi/">https://xiaosenmao.github.io/2021/07/10/docker-qi-dong-mongodb-rong-qi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -490,7 +530,15 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Docker/">
+                                    <span class="chip bg-color">Docker</span>
+                                </a>
+                            
+                                <a href="/tags/MongoDB/">
+                                    <span class="chip bg-color">MongoDB</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -658,9 +706,64 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2021/07/10/docker-qi-dong-mongodb-rong-qi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Docker启动MongoDB容器">
+                        
+                        <span class="card-title">Docker启动MongoDB容器</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Docker/" class="post-category">
+                                    Docker
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Docker/">
+                        <span class="chip bg-color">Docker</span>
+                    </a>
+                    
+                    <a href="/tags/MongoDB/">
+                        <span class="chip bg-color">MongoDB</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2021/07/10/centos-xi-tong-zhong-shi-yong-docker-qi-dong-mysql/">
                     <div class="card-image">
@@ -678,9 +781,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -705,44 +808,6 @@
                     </a>
                     
                 </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/07/10/di-yi-pian-bo-ke/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="第一篇博客">
-                        
-                        <span class="card-title">第一篇博客</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-10
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            XiaoSenMao
-                            
-                        </span>
-                    </div>
-                </div>
-
                 
             </div>
         </div>
