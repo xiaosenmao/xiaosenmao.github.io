@@ -11,6 +11,22 @@
         <content type="html"><![CDATA[<h3 id="一、Docker安装"><a href="#一、Docker安装" class="headerlink" title="一、Docker安装"></a>一、Docker安装</h3><blockquote><p>安装docker可以参考<a href="https://docs.docker.com/engine/install">官方文档</a></p><ol><li>安装完成后查看docker进程状态,执行命令：<code>systemctl status docker</code>,结果为：<strong>inactive</strong><br><img src="/images/docker%E7%8A%B6%E6%80%81.png"></li><li>接下来启动docker进程，执行命令：<code>systemctl start docker</code><br><img src="/images/docker%E5%90%AF%E5%8A%A8%E5%90%8E.png"></li><li>下载测试hello-world镜像并在容器中运行。当容器运行时，它会打印一条信息性消息并退出。 执行命令：<code>docker run hello-world</code><br><img src="/images/dockerhelloworld.png"></li></ol></blockquote><h3 id="二、Docker启动MySQL"><a href="#二、Docker启动MySQL" class="headerlink" title="二、Docker启动MySQL"></a>二、Docker启动MySQL</h3><blockquote><ol><li>执行命令：<code>docker run --name mysql-demo1 -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 -d mysql</code>结果如下图所示<blockquote><p><code>--name</code>指定容器名称为 mysql-demo1<br><code>-e</code>设置环境变量,设置MySQL服务root用户的密码<br><code>-p</code>映射容器服务的3306端口到宿主机的3306端口，这样外部主机可以直接通过宿主机ip:3306访问到MySQL的服务。（前面的3306为宿主机端口，后面的3306是docker容器中mysql服务的端口）<br><code>-d</code>设置后台运行<br><img src="/images/docker-mysql-demo1.png"></p></blockquote></li><li>使用客户端工具Navicat连接容器中的mysql<br>如果出现如下错误,可以尝试如下解决方法<br><img src="/images/20210709014246.png"><blockquote><ul><li>进入容器启动mysql,执行：<code>docker exec -it mysql-demo1</code>，接着下图操作执行</li><li><img src="/images/20210709015648.png"></li><li>再次使用Navicate尝试连接，提示连接成功</li><li>如下图：</li><li><img src="/images/20210709020057.png"></li></ul></blockquote></li></ol></blockquote><h3 id="三、结尾"><a href="#三、结尾" class="headerlink" title="三、结尾"></a>三、结尾</h3><blockquote><p>更过关于Docker的介绍和用法请查阅相关资料：</p><blockquote><ol><li><a href="https://www.docker.com/">Docker官网</a></li><li><a href="https://github.com/docker">Docker官方github</a></li><li><a href="https://www.docker.org.cn/index.html">Docker资源 - docker中文社区</a></li></ol></blockquote></blockquote>]]></content>
       
       
+      <categories>
+          
+          <category> Docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Docker </tag>
+            
+            <tag> CentOS </tag>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
       
     </entry>
     
