@@ -297,14 +297,34 @@
             <div class="row">
     <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
         <div class="brand">
-            <div class="title center-align">
+            <div class="title center-align" id="custom-subtitle">
                 
+                      《劝学》 唐·孟郊     <br />
                     击石乃有火，不击元无烟。<br />
                     人学始知道，不学非自然。<br />
                     万事须己运，他得非我贤。<br />
                     青春须早为，岂能长少年。
                 
             </div>
+            <script>
+                var subtitleDiv = document.getElementById("custom-subtitle");
+                var random = window.crypto.getRandomValues(new Uint8Array(1));
+                var content = `
+                      《劝学》 唐·孟郊    <br />
+                    击石乃有火，不击元无烟。<br />
+                    人学始知道，不学非自然。<br />
+                    万事须己运，他得非我贤。<br />
+                    青春须早为，岂能长少年。
+                `;
+                if (random % 2 === 0) {
+                    content = `
+                          《苔》 清·袁牧      <br />
+                        白日不到处，青春恰自来。<br />
+                        苔花如米小，亦学牡丹开。
+                    `;
+                }
+                subtitleDiv.innerHTML = content;
+            </script>
 
             <div class="description center-align">
                 

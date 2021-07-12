@@ -250,14 +250,34 @@
     <div class="row">
     <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
         <div class="brand">
-            <div class="title center-align">
+            <div class="title center-align" id="custom-subtitle">
                 
+                      《劝学》 唐·孟郊     <br />
                     击石乃有火，不击元无烟。<br />
                     人学始知道，不学非自然。<br />
                     万事须己运，他得非我贤。<br />
                     青春须早为，岂能长少年。
                 
             </div>
+            <script>
+                var subtitleDiv = document.getElementById("custom-subtitle");
+                var random = window.crypto.getRandomValues(new Uint8Array(1));
+                var content = `
+                      《劝学》 唐·孟郊    <br />
+                    击石乃有火，不击元无烟。<br />
+                    人学始知道，不学非自然。<br />
+                    万事须己运，他得非我贤。<br />
+                    青春须早为，岂能长少年。
+                `;
+                if (random % 2 === 0) {
+                    content = `
+                          《苔》 清·袁牧      <br />
+                        白日不到处，青春恰自来。<br />
+                        苔花如米小，亦学牡丹开。
+                    `;
+                }
+                subtitleDiv.innerHTML = content;
+            </script>
 
             <div class="description center-align">
                 
@@ -321,19 +341,19 @@
                 </a>
                 
                 
-                <a href="/tags/MongoDB/" title="MongoDB: 1">
+                <a href="/tags/MySQL/" title="MySQL: 1">
                     <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            data-tagname="MongoDB" style="background-color: #F5EEF8;">MongoDB
+                             chip-default "
+                            data-tagname="MySQL" style="background-color: #F5EEF8;">MySQL
                         <span class="tag-length">1</span>
                     </span>
                 </a>
                 
                 
-                <a href="/tags/MySQL/" title="MySQL: 1">
+                <a href="/tags/MongoDB/" title="MongoDB: 1">
                     <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            data-tagname="MySQL" style="background-color: #D5F5E3;">MySQL
+                             chip-active "
+                            data-tagname="MongoDB" style="background-color: #D5F5E3;">MongoDB
                         <span class="tag-length">1</span>
                     </span>
                 </a>
