@@ -406,14 +406,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-10
+                    2021-07-12
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    356
+                    444
                 </div>
                 
 
@@ -457,7 +457,9 @@
 <li>新建testdb数据库： <code>use testdb</code></li>
 <li>创建一个 dbOwner 角色的用户<br><img src="/images/20210710213257.png"></li>
 <li>进行一些操作<br><img src="/images/20210710221634.png"></li>
-<li>使用GUI工具Robo3T连接成功,注意防火墙放行27017端口，同时注意云服务器的防火墙端口放行规则<br><img src="/images/20210710232119.png"><br><img src="/images/20210710232206.png"><h2 id="MongDB的备份和恢复"><a href="#MongDB的备份和恢复" class="headerlink" title="MongDB的备份和恢复"></a>MongDB的备份和恢复</h2><h4 id="数据备份"><a href="#数据备份" class="headerlink" title="数据备份"></a>数据备份</h4></li>
+<li>使用GUI工具Robo3T连接成功,注意防火墙放行27017端口，同时注意云服务器的防火墙端口放行规则<br><img src="/images/20210710232119.png"><br><img src="/images/20210710232206.png"></li>
+</ol>
+<h2 id="MongDB的备份和恢复"><a href="#MongDB的备份和恢复" class="headerlink" title="MongDB的备份和恢复"></a>MongDB的备份和恢复</h2><h4 id="数据备份"><a href="#数据备份" class="headerlink" title="数据备份"></a>数据备份</h4><ol>
 <li>执行： <code>docker ps | grep mongotest</code>查看检索mongo容器</li>
 <li>备份：<code>docker exec -it mongotest_mongo_1 mongodump -h localhost -u root -p example -o /tmp/test</code><blockquote>
 <p>-h == –host MongoDB所在服务器地址<br>-u == –username<br>-p == –password<br>-o == –out 指定BSON保存到的目录<br><img src="/images/20210710234354.png"></p>
@@ -466,6 +468,17 @@
 <li>将容器中的数据备份文件拷贝到宿主机上: <code>docker cp e499c3459fbd:/tmp/test /tmp/test</code></li>
 <li>查看结果： <code>cd /tmp &amp;&amp; ls</code><br><img src="/images/20210710234913.png"><h4 id="数据恢复"><a href="#数据恢复" class="headerlink" title="数据恢复"></a>数据恢复</h4></li>
 <li>执行 <code>docker exec -it mongotest_mongo_1 mongorestore -h localhost -u root -p example --dir /tmp/test</code></li>
+</ol>
+<h2 id="Mongoose操作数据"><a href="#Mongoose操作数据" class="headerlink" title="Mongoose操作数据"></a>Mongoose操作数据</h2><ol>
+<li>客户端安装nodejs，初始化一个node项目</li>
+<li>安装 mongoose, 执行 <code>npm install -S mongoose</code></li>
+<li>新建 app.js 文件，写入如下内容</li>
+<li>执行 <code>node app.js</code><br><img src="/images/20210712175256.png"></li>
+<li>使用Robo 3T查看结果<br><img src="/images/20210712181446.png"></li>
+<li>至此最基本的MongoDb连接和操作都已完成，更多的用法可以浏览相关文档。<blockquote>
+<p><a target="_blank" rel="noopener" href="https://nodejs.org/en/docs/">NodeJS 文档</a><br><a target="_blank" rel="noopener" href="https://mongoosejs.com/docs/">Mongoose 文档</a></p>
+</blockquote>
+</li>
 </ol>
 
                 
@@ -658,7 +671,7 @@
     <div id="rewardModal" class="modal">
         <div class="modal-content">
             <a class="close modal-close"><i class="fas fa-times"></i></a>
-            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <h4 class="reward-title">您的赏识是我前进的动力</h4>
             <div class="reward-content">
                 <div class="reward-tabs">
                     <ul class="tabs row">

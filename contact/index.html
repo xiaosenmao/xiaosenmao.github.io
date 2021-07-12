@@ -252,7 +252,10 @@
         <div class="brand">
             <div class="title center-align">
                 
-                    subtitle
+                    击石乃有火，不击元无烟。<br />
+                    人学始知道，不学非自然。<br />
+                    万事须己运，他得非我贤。<br />
+                    青春须早为，岂能长少年。
                 
             </div>
 
@@ -279,8 +282,17 @@
 
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
-    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
+    var bannerUrlBackup = "/medias/banner/" + new Date().getDay() + '.jpg';
+    var bannerUrl = "https://api.mfstudio.cc/bing/";
+    $.get(bannerUrl, function(data, status){
+        console.log("数据: " + "\n状态: " + status);
+        if (status === 'success') {
+            $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
+        } else {
+            $('.bg-cover').css('background-image', 'url(' + bannerUrlBackup + ')');
+        }
+    });
+    // $('.bg-cover').css('background-image', 'url(' + bannerUrlBackup + ')');
 </script>
 
 

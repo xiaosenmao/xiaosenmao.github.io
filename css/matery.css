@@ -4,12 +4,22 @@
     .container {
         width: 95%;
     }
+
+    .bg-cover .title {
+        font-size: 1.25rem;
+        margin-bottom: 40px;
+    }
 }
 
 /*中等屏幕下(平板类)的样式*/
 @media only screen and (min-width: 600px) and (max-width: 992px) {
     .container {
         width: 90%;
+    }
+
+    .bg-cover .title {
+        font-size: 2rem;
+        margin-bottom: 40px;
     }
 }
 
@@ -30,6 +40,11 @@
         width: 90%;
         margin: 0 auto;
         max-width: 1250px;
+    }
+
+    .bg-cover .title {
+        font-size: 3.6rem;
+        margin-bottom: 20px;
     }
 }
 
@@ -549,10 +564,10 @@ header .go-back i {
     height: 40vh !important;
 }
 
-.bg-cover:after {
+/* .bg-cover:after {
     -webkit-animation: rainbow 30s infinite;
     animation: rainbow 30s infinite;
-}
+} */
 
 .bg-cover:before,
 .bg-cover:after {
@@ -573,9 +588,9 @@ header .go-back i {
 }
 
 .bg-cover .title {
-    font-size: 4rem;
+    /* font-size: 4rem; */
     line-height: 1.2em;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     position: relative;
 }
 
