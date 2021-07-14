@@ -1654,7 +1654,7 @@ thead {
     max-width: 160px;
     width: 100%;
     margin: 0 auto;
-    transform: translate3d(0, -65%, 0);
+    transform: translate3d(0, -50%, 0) scale(0.8);
 }
 
 .profile .author {
