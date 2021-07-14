@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Redis的安装使用介绍</title>
+      <link href="/2021/07/13/redis-de-an-zhuang-shi-yong-jie-shao/"/>
+      <url>/2021/07/13/redis-de-an-zhuang-shi-yong-jie-shao/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Redis介绍"><a href="#Redis介绍" class="headerlink" title="Redis介绍"></a>Redis介绍</h2><h3 id="Redis简介"><a href="#Redis简介" class="headerlink" title="Redis简介"></a>Redis简介</h3><p>Redis 是完全开源的，遵守BSD协议，是一个高性能的key-value数据库。Redis 与其他key-value缓存产品有以下三个特点：</p><ul><li>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li><li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li><li>Redis支持数据的备份，即master-slave模式的数据备份。  </li></ul><h3 id="Redis优势"><a href="#Redis优势" class="headerlink" title="Redis优势"></a>Redis优势</h3><ul><li>性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。</li><li>丰富的数据类型 – Redis支持二进制案例的Strings, Lists, Hashes, Sets及Ordered Sets数据类型操作。</li><li>原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。</li><li>丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。  </li></ul><h3 id="Redis与其他key-value存储的不同之处"><a href="#Redis与其他key-value存储的不同之处" class="headerlink" title="Redis与其他key-value存储的不同之处"></a>Redis与其他key-value存储的不同之处</h3><ul><li>Redis有着更为复杂的数据结构并且提供对他们的原子性操作，这是一个不同于其他数据库的进化路径。Redis的数据类型都是基于基本数据结构的同时对程序员透明，无需进行额外的抽象。</li><li>Redis运行在内存中但是可以持久化到磁盘，所以在对不同数据集进行高速读写时需要权衡内存，应为数据量不能大于硬件内存。在内存数据库方面的另一个优点是， 相比在磁盘上相同的复杂的数据结构，在内存中操作起来非常简单，这样Redis可以做很多内部复杂性很强的事情。 同时，在磁盘格式方面他们是紧凑的以追加的方式产生的，因为他们并不需要进行随机访问。</li></ul><h2 id="Redis安装和使用"><a href="#Redis安装和使用" class="headerlink" title="Redis安装和使用"></a>Redis安装和使用</h2><h3 id="Redis安装"><a href="#Redis安装" class="headerlink" title="Redis安装"></a>Redis安装</h3><p>安装Redis可以参考<a href="https://redis.io/download">文档</a>，这里使用docker的方式来操作</p><ul><li>新建测试目录：<code>mkdir /home/redistest &amp;&amp; cd /home/redistest/</code></li><li>新建docker-compose.yml文件：<code>vim docker-compose.yml</code>，写入如下内容，保存退出，注意此处把端口映射为 <strong>15001</strong>， 检查防火墙和与云服务器运营商的防火墙端口放行规则。 推荐使用docker-compose来启动容器，它实际上等同于如下执行命名<code>docker run -itd --restart=always --name redis-test -p 15001:6379 -v /home/reidstest:/data redis redis-server --requirepass 123456</code><br><img src="/images/20210713152346.png">   </li></ul><blockquote><p>注意需要放置在公网访问的redis服务需要考虑几点</p><blockquote><p>1.防火墙规则是否放行，运营商的防火墙是否放行<br>2.bind的IP需要设置成为0.0.0.0，才能让其他所有的服务访问的到（不过这样做也不太安全，需要设置密码），最好是绑定到指定的IP，并设置访问密码</p></blockquote></blockquote><ul><li>启动容器：<code>docker-compose up -d</code></li><li>查看容器状态：<code>docker ps -a | grep redis</code><br><img src="/images/20210713152014.png"></li><li>查看redis服务：<code>docker logs -f redis-test</code>  </li></ul><h3 id="Redis-cli的使用"><a href="#Redis-cli的使用" class="headerlink" title="Redis-cli的使用"></a>Redis-cli的使用</h3><ul><li>第一种：进入容器并使用redis-cli连接redis服务通过交互式终端来操作数据库：<code>docker exec -it redis-test redis-cli</code></li><li>这里演示第二种: 先进入容器内的bash终端：<code>docker exec -it redis-test /bin/bash</code><blockquote><p>接着执行 <code>redis-cli</code>进入redis-cli交互终端 , 输入 <code>auth 123456</code>进行鉴权<br><img src="/images/20210713170411.png"><br><code>quit</code> 退出 redis-cli客户端<br>String 类型操作命令 <code>set</code> <code>get</code> <code>keys</code> <code>del</code> <code>incr</code> 等等<br>Hash 类型操作指令 <code>hset</code> <code>hget</code> <code>hgetall</code> <code>hmset</code> 等等<br>List 类型操作指令 <code>rpop</code> <code>lpop</code> <code>rpush</code> <code>lpush</code> 等等<br>订阅 发布 <code>subscribe</code> <code>publish</code></p><blockquote><p>使用 <code>subscribe</code> + <code>主题名</code> 订阅主题<br><img src="/images/20210713172906.png"><br>使用 <code>publish</code> + <code>主题名</code> + <code>消息</code> 向对应主题发布消息<br><img src="/images/20210713172916.png"></p></blockquote></blockquote></li><li>服务相关 &amp; 备份恢复<blockquote><ol><li><code>client list</code> 、 <code>client kill</code><blockquote><p>登录 redis-cli 后，运行<code>client list</code>，返回所有连接到服务器的客户端信息和统计数据 <strong>idle</strong> 代表空闲时长 idle=0 是当前的client<br><code>client kill ip:port</code> 关闭客户端<br><img src="/images/20210713180050.png"></p></blockquote></li><li><code>showlog</code> 调试redis的重要命令</li><li>清空数据库的命令 <code>flushall</code>  <code>、flushdb</code> <strong>慎重</strong><blockquote><p>flushall清空整个 Redis 服务器的数据(删除所有数据库的所有key)。<br>flushdb清空当前数据库中的所有 key。  </p></blockquote></li></ol></blockquote></li></ul><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul><li><a href="https://github.com/redis/redis">Github Redis</a></li><li><a href="https://hub.docker.com/_/redis">DockerHub Redis</a></li><li><a href="http://doc.redisfans.com/">Redis命令参考</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Docker </tag>
+            
+            <tag> Redis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Docker启动MongoDB容器</title>
       <link href="/2021/07/10/docker-qi-dong-mongodb-rong-qi/"/>
       <url>/2021/07/10/docker-qi-dong-mongodb-rong-qi/</url>

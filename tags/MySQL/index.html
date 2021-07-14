@@ -110,17 +110,6 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
     <a href="/friends" class="waves-effect waves-light">
       
       <i class="fas fa-address-book" style="zoom: 0.6;"></i>
@@ -213,17 +202,6 @@
         
         <li class="m-nav-item">
 	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
 		<a href="/friends" class="waves-effect waves-light">
 			
 			    <i class="fa-fw fas fa-address-book"></i>
@@ -303,15 +281,29 @@
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
     var bannerUrlBackup = "/medias/banner/" + new Date().getDay() + '.jpg';
-    var bannerUrl = "https://api.mfstudio.cc/bing/";
-    $.get(bannerUrl, function(data, status){
-        console.log("数据: " + "\n状态: " + status);
-        if (status === 'success') {
-            $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
+
+    // https://cn.bing.com/HPImageArchive.aspx?format=js&cc=jp&idx=0&n=1
+    function getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min; // 含最大值，含最小值
+    };
+    var index = getRandomIntInclusive(0, 7);
+    var idx = 0; // 0~7 （递减日期）
+    var imageCount = 8;  // 1~8  (获取图片数量)
+    var getBingUrl = `https://jsonp.afeld.me/?callback=&url=https%3A%2F%2Fcn.bing.com%2FHPImageArchive.aspx%3Fformat%3Djs%26cc%3Djp%26${idx}%3D0%26n%3D${imageCount}`
+    $.get(getBingUrl, function(data, status){
+        // console.log("数据--: " + data.images[index].url + "\n状态: " + status);
+        if (status === 'success' && data && data.images && data.images[index] && data.images[index].url) {
+            $('.bg-cover').css('background-image', `url(https://www.bing.com${data.images[index].url})`);
+            // https://github.com/TimothyYe/bing-wallpaper
+            // $('.bg-cover').css('background-image', `url(https://bing.biturl.top/?resolution=1920&format=image&index=0&mkt=zh-CN)`);
         } else {
-            $('.bg-cover').css('background-image', 'url(' + bannerUrlBackup + ')');
+            $('.bg-cover').css('background-image', `url(${bannerUrlBackup})`);
         }
+        $('.bg-cover').css('background-size', 'cover').css('background-repeat', 'no-repeat');
     });
+
     // $('.bg-cover').css('background-image', 'url(' + bannerUrlBackup + ')');
 </script>
 
@@ -332,11 +324,11 @@
             <div class="tag-chips">
                 
                 
-                <a href="/tags/Docker/" title="Docker: 2">
+                <a href="/tags/Docker/" title="Docker: 3">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
                             data-tagname="Docker" style="background-color: #F9EBEA;">Docker
-                        <span class="tag-length">2</span>
+                        <span class="tag-length">3</span>
                     </span>
                 </a>
                 
@@ -354,6 +346,15 @@
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
                             data-tagname="MongoDB" style="background-color: #D5F5E3;">MongoDB
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/Redis/" title="Redis: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Redis" style="background-color: #E8F8F5;">Redis
                         <span class="tag-length">1</span>
                     </span>
                 </a>
@@ -472,7 +473,6 @@
             <span id="year">2021</span>
             <a href="/about" target="_blank">XiaoSenMao</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
             
             

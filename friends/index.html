@@ -110,17 +110,6 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
     <a href="/friends" class="waves-effect waves-light">
       
       <i class="fas fa-address-book" style="zoom: 0.6;"></i>
@@ -213,17 +202,6 @@
         
         <li class="m-nav-item">
 	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
 		<a href="/friends" class="waves-effect waves-light">
 			
 			    <i class="fa-fw fas fa-address-book"></i>
@@ -303,15 +281,29 @@
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
     var bannerUrlBackup = "/medias/banner/" + new Date().getDay() + '.jpg';
-    var bannerUrl = "https://api.mfstudio.cc/bing/";
-    $.get(bannerUrl, function(data, status){
-        console.log("数据: " + "\n状态: " + status);
-        if (status === 'success') {
-            $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
+
+    // https://cn.bing.com/HPImageArchive.aspx?format=js&cc=jp&idx=0&n=1
+    function getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min; // 含最大值，含最小值
+    };
+    var index = getRandomIntInclusive(0, 7);
+    var idx = 0; // 0~7 （递减日期）
+    var imageCount = 8;  // 1~8  (获取图片数量)
+    var getBingUrl = `https://jsonp.afeld.me/?callback=&url=https%3A%2F%2Fcn.bing.com%2FHPImageArchive.aspx%3Fformat%3Djs%26cc%3Djp%26${idx}%3D0%26n%3D${imageCount}`
+    $.get(getBingUrl, function(data, status){
+        // console.log("数据--: " + data.images[index].url + "\n状态: " + status);
+        if (status === 'success' && data && data.images && data.images[index] && data.images[index].url) {
+            $('.bg-cover').css('background-image', `url(https://www.bing.com${data.images[index].url})`);
+            // https://github.com/TimothyYe/bing-wallpaper
+            // $('.bg-cover').css('background-image', `url(https://bing.biturl.top/?resolution=1920&format=image&index=0&mkt=zh-CN)`);
         } else {
-            $('.bg-cover').css('background-image', 'url(' + bannerUrlBackup + ')');
+            $('.bg-cover').css('background-image', `url(${bannerUrlBackup})`);
         }
+        $('.bg-cover').css('background-size', 'cover').css('background-repeat', 'no-repeat');
     });
+
     // $('.bg-cover').css('background-image', 'url(' + bannerUrlBackup + ')');
 </script>
 
@@ -524,10 +516,10 @@
                             <div class="card frind-card1">
                                 <div class="frind-ship">
                                     <div class="title">
-                                        <img src="https://lh4.googleusercontent.com/-Wxl9HaDj1-I/SYPJWMNM65I/AAAAAAAAAcc/FjINutqB9_I/ThinkerSmall.jpg" alt="img">
+                                        <img src="/images/ThinkerSmall.jpg" alt="img">
                                         <div>
                                             <h1 class="friend-name">编程随想</h1>
-                                            <p style="position: relative;top: -35px;">编程随想的博客，需要科学上网访问</p>
+                                            <p style="position: relative;top: -35px;">编程随想博客，要带梯子</p>
                                         </div>
                                     </div>
                                     <div class="friend-button">
@@ -569,11 +561,74 @@
                                         <img src="https://cdn.docschina.org/static/media/docschina-logo.4c5554f1.svg" alt="img">
                                         <div>
                                             <h1 class="friend-name">印记中文</h1>
-                                            <p style="position: relative;top: -35px;">印记中文，前端技术栈</p>
+                                            <p style="position: relative;top: -35px;">Front end tech stack</p>
                                         </div>
                                     </div>
                                     <div class="friend-button">
                                         <a href="https://docschina.org" target="_blank"
+                                            class="button button-glow button-rounded button-caution">
+                                            前去学习
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col s12 m6 l4 friend-div" data-aos="zoom-in-up">
+                            <div class="card frind-card4">
+                                <div class="frind-ship">
+                                    <div class="title">
+                                        <img src="/images/google.svg" alt="img">
+                                        <div>
+                                            <h1 class="friend-name">Google dev</h1>
+                                            <p style="position: relative;top: -35px;">Build anything with Google</p>
+                                        </div>
+                                    </div>
+                                    <div class="friend-button">
+                                        <a href="https://developers.google.com/web" target="_blank"
+                                            class="button button-glow button-rounded button-caution">
+                                            前去学习
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col s12 m6 l4 friend-div" data-aos="zoom-in-up">
+                            <div class="card frind-card5">
+                                <div class="frind-ship">
+                                    <div class="title">
+                                        <img src="/images/tools.svg" alt="img">
+                                        <div>
+                                            <h1 class="friend-name">在线工具</h1>
+                                            <p style="position: relative;top: -35px;">一些工具</p>
+                                        </div>
+                                    </div>
+                                    <div class="friend-button">
+                                        <a href="https://tool.lu/" target="_blank"
+                                            class="button button-glow button-rounded button-caution">
+                                            前去学习
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col s12 m6 l4 friend-div" data-aos="zoom-in-up">
+                            <div class="card frind-card6">
+                                <div class="frind-ship">
+                                    <div class="title">
+                                        <img src="/images/shici.svg" alt="img">
+                                        <div>
+                                            <h1 class="friend-name">古诗文网</h1>
+                                            <p style="position: relative;top: -35px;">诗词古籍</p>
+                                        </div>
+                                    </div>
+                                    <div class="friend-button">
+                                        <a href="https://www.gushiwen.cn" target="_blank"
                                             class="button button-glow button-rounded button-caution">
                                             前去学习
                                         </a>
@@ -680,7 +735,6 @@
             <span id="year">2021</span>
             <a href="/about" target="_blank">XiaoSenMao</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
             
             
