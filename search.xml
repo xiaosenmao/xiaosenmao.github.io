@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>Apache服务器安装配置与SELinux安全子系统</title>
+      <link href="/2021/08/18/apache-fu-wu-qi-an-zhuang-pei-zhi-yu-selinux-an-quan-zi-xi-tong/"/>
+      <url>/2021/08/18/apache-fu-wu-qi-an-zhuang-pei-zhi-yu-selinux-an-quan-zi-xi-tong/</url>
+      
+        <content type="html"><![CDATA[<h3 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h3><ol><li>使用CentOS7.6作为服务器，此处使用VirtualBox创建了一个虚拟机，网络模式是<strong>桥接</strong></li><li>查看ip执行: <code>ip addr</code> 或者<code>ifconfig</code>, 使用ssh连接虚拟机：<code>ssh root@192.168.1.66</code></li></ol><h3 id="二、Apache服务安装"><a href="#二、Apache服务安装" class="headerlink" title="二、Apache服务安装"></a>二、Apache服务安装</h3><ol><li>安装： <code>yum install -y httpd</code></li><li>查看httpd服务状态：<code>systemctl status httpd</code>，此时默认是关闭状态; 或者执行：<code>ps -aux | grep httpd</code>查找httpd服务进程；</li><li>开启httpd服务：<code>systemctl start httpd</code>； 再次查看状态：<code>systemctl status httpd</code></li><li><code>systemctl enable httpd</code>将httpd服务设置为开机自启动;<br>(<code>systemctl disable httpd</code>关闭开机自启动)<br>(<code>systemctl is-enable httpd</code>查看httpd是否为开机自启动)</li><li>使用主机的浏览器访问：127.0.0.1, 查看此时不能打开Apache提供的默认页面，这是因为防火墙中http服务的80端口没有放行导致</li><li>查看目前开放的端口<code>firewall-cmd --list-ports</code></li><li>放行80端口：<code>firewall-cmd --zone=public --add-port=tcp/80 --permanent</code></li><li>重载防火墙配置：<code>firewall-cmd reload</code></li><li>查看80端口：<code>firewall-cmd --zone=public --query-port=80/tcp</code></li><li>刷新浏览器即可看到网页内容(默认内容就是 /var/www/html/index.html )</li></ol><h3 id="三、Apache服务器配置"><a href="#三、Apache服务器配置" class="headerlink" title="三、Apache服务器配置"></a>三、Apache服务器配置</h3><table><thead><tr><th>配置文件名称</th><th>位置</th></tr></thead><tbody><tr><td>服务目录</td><td>/etc/httpd</td></tr><tr><td>主配置文件</td><td>/etc/httpd/conf/httpd.conf</td></tr><tr><td>网站数据目录</td><td>/var/www/html</td></tr><tr><td>访问日志</td><td>/var/log/httpd/access_log</td></tr><tr><td>错误日志</td><td>/var/log/httpd/error_log</td></tr></tbody></table><ol><li>修改Apache服务默认主页：<blockquote><ol><li><code>mkdir /home/web</code>然后 <code>echo "Welcome to custom page" &gt; /home/web/index.html</code></li><li><code>vim /etc/httpd/conf/httpd.conf</code>,</li><li>将 DocumentRoot “/var/www/html” 修改为   DocumentRoot “/home/web”</li><li>紧跟着将 &lt;Directory “/var/www/html”&gt;  修改为 &lt;Directory “/home/web”&gt; 保存退出<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818040135.png"></li><li>刷新浏览器，仍然看到页面没有变化，原因就是 SELinux 的限制</li></ol></blockquote></li></ol><h3 id="四、SELinux安全子系统"><a href="#四、SELinux安全子系统" class="headerlink" title="四、SELinux安全子系统"></a>四、SELinux安全子系统</h3><ol><li>介绍</li></ol><ul><li>SELinux是Security-Enhanced Linux的缩写,表示“安全增强型Linux”</li><li>美国国家安全局(NSA)在Linux开源社区的帮助下开发的MAC(mandatory access control)的安全子系统</li><li>SELinux的“双重保险”<table><thead><tr><th>模式</th><th>含义</th></tr></thead><tbody><tr><td>域限制 (Domain Limitation)</td><td>对服务程序的功能进行限制</td></tr><tr><td>安全上下文 (Security Context)</td><td>对文件资源的访问限制</td></tr></tbody></table></li><li>SELinux的三种配置模式<table><thead><tr><th>配置模式</th><th>含义</th></tr></thead><tbody><tr><td>enforcing</td><td>强制启用安全策略模式，将拦截服务的不合法请求</td></tr><tr><td>permissive</td><td>遇到服务越权访问时，只发出警告而不强制拦截</td></tr><tr><td>disabled</td><td>对于越权的行为不警告也不拦截</td></tr></tbody></table></li></ul><ol start="2"><li>设置</li></ol><ul><li><code>sestatus</code>查看状态 （或者使用 <code>sestatus -v</code>显示更多信息）<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818043828.png"></li><li><code>cat /etc/selinux/config</code> 查看配置,可以直接修改此配置文件，但是要等系统下次启动时才能生效<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818044227.png"></li><li><code>getenforce</code> 得到 Enforcing</li><li><code>setenforce 0</code>设置为’Permissive’并且立即生效，当系统重启时会失效</li><li><code>getenforce</code> 得到 Permissive</li><li>刷新网页看到自定义页面<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818041515.png"></li><li><code>setenforce 1</code></li><li><code>getenforce</code> 得到 Enforcing</li><li>刷新网站，又看到了Apache的默认页面</li><li><code>ls -Zd /var/www/html</code>得到安全上下文<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818045035.png"></li><li><code>ls -Zd /home/web</code>得到安全上下文<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818045215.png"><br>对比可以看到差异</li><li>需要将 ‘/home/web’ 的安全上下文修改成和 ‘/var/www/html’一致就行</li><li><code>semanage</code>命令可能没有安装（<code>yum provides semanage</code> 得到需要安装’policycoreutils-python’工具）</li><li><code>yum install -y policycoreutils-python</code></li><li><code>semanage fcontext -a -t httpd_sys_content_t /home/web</code></li><li><code>semanage fcontext -a -t httpd_sys_content_t /home/web/*</code></li><li>使修改的上下文立即生效：<code>restorecon -Rv /home/web</code></li><li><code>ls -Zd /home/web</code></li><li>刷新页面，即看到新的页面</li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> CentOS </tag>
+            
+            <tag> Apache </tag>
+            
+            <tag> SELinux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Redis的安装使用介绍</title>
       <link href="/2021/07/13/redis-de-an-zhuang-shi-yong-jie-shao/"/>
       <url>/2021/07/13/redis-de-an-zhuang-shi-yong-jie-shao/</url>

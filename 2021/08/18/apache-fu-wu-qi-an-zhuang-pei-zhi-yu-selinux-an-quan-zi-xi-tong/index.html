@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Redis的安装使用介绍, 个人博客 前端 HTML5 CSS">
+    <meta name="keywords" content="Apache服务器安装配置与SELinux安全子系统, 个人博客 前端 HTML5 CSS">
     <meta name="description" content="个人博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Redis的安装使用介绍 | Hi</title>
+    <title>Apache服务器安装配置与SELinux安全子系统 | Hi</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -227,12 +227,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Redis的安装使用介绍</h1>
+                    <h1 class="description center-align post-title">Apache服务器安装配置与SELinux安全子系统</h1>
                 </div>
             </div>
         </div>
@@ -348,27 +348,22 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Docker/">
-                                <span class="chip bg-color">Docker</span>
+                            <a href="/tags/CentOS/">
+                                <span class="chip bg-color">CentOS</span>
                             </a>
                         
-                            <a href="/tags/Redis/">
-                                <span class="chip bg-color">Redis</span>
+                            <a href="/tags/Apache/">
+                                <span class="chip bg-color">Apache</span>
+                            </a>
+                        
+                            <a href="/tags/SELinux/">
+                                <span class="chip bg-color">SELinux</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/Docker/" class="post-category">
-                                Docker
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -377,28 +372,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-07-13
+                    2021-08-18
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-13
+                    2021-08-18
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    831
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    3 分
                 </div>
                 
 
@@ -418,66 +413,130 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Redis介绍"><a href="#Redis介绍" class="headerlink" title="Redis介绍"></a>Redis介绍</h2><h3 id="Redis简介"><a href="#Redis简介" class="headerlink" title="Redis简介"></a>Redis简介</h3><p>Redis 是完全开源的，遵守BSD协议，是一个高性能的key-value数据库。Redis 与其他key-value缓存产品有以下三个特点：</p>
-<ul>
-<li>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li>
-<li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li>
-<li>Redis支持数据的备份，即master-slave模式的数据备份。  </li>
-</ul>
-<h3 id="Redis优势"><a href="#Redis优势" class="headerlink" title="Redis优势"></a>Redis优势</h3><ul>
-<li>性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。</li>
-<li>丰富的数据类型 – Redis支持二进制案例的Strings, Lists, Hashes, Sets及Ordered Sets数据类型操作。</li>
-<li>原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。</li>
-<li>丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。  </li>
-</ul>
-<h3 id="Redis与其他key-value存储的不同之处"><a href="#Redis与其他key-value存储的不同之处" class="headerlink" title="Redis与其他key-value存储的不同之处"></a>Redis与其他key-value存储的不同之处</h3><ul>
-<li>Redis有着更为复杂的数据结构并且提供对他们的原子性操作，这是一个不同于其他数据库的进化路径。Redis的数据类型都是基于基本数据结构的同时对程序员透明，无需进行额外的抽象。</li>
-<li>Redis运行在内存中但是可以持久化到磁盘，所以在对不同数据集进行高速读写时需要权衡内存，应为数据量不能大于硬件内存。在内存数据库方面的另一个优点是， 相比在磁盘上相同的复杂的数据结构，在内存中操作起来非常简单，这样Redis可以做很多内部复杂性很强的事情。 同时，在磁盘格式方面他们是紧凑的以追加的方式产生的，因为他们并不需要进行随机访问。</li>
-</ul>
-<h2 id="Redis安装和使用"><a href="#Redis安装和使用" class="headerlink" title="Redis安装和使用"></a>Redis安装和使用</h2><h3 id="Redis安装"><a href="#Redis安装" class="headerlink" title="Redis安装"></a>Redis安装</h3><p>安装Redis可以参考<a target="_blank" rel="noopener" href="https://redis.io/download">文档</a>，这里使用docker的方式来操作</p>
-<ul>
-<li>新建测试目录：<code>mkdir /home/redistest &amp;&amp; cd /home/redistest/</code></li>
-<li>新建docker-compose.yml文件：<code>vim docker-compose.yml</code>，写入如下内容，保存退出，注意此处把端口映射为 <strong>15001</strong>， 检查防火墙和与云服务器运营商的防火墙端口放行规则。 推荐使用docker-compose来启动容器，它实际上等同于如下执行命名<code>docker run -itd --restart=always --name redis-test -p 15001:6379 -v /home/reidstest:/data redis redis-server --requirepass 123456</code><br><img src="/images/20210713152346.png">   </li>
-</ul>
-<blockquote>
-<p>注意需要放置在公网访问的redis服务需要考虑几点</p>
-<blockquote>
-<p>1.防火墙规则是否放行，运营商的防火墙是否放行<br>2.bind的IP需要设置成为0.0.0.0，才能让其他所有的服务访问的到（不过这样做也不太安全，需要设置密码），最好是绑定到指定的IP，并设置访问密码</p>
-</blockquote>
-</blockquote>
-<ul>
-<li>启动容器：<code>docker-compose up -d</code></li>
-<li>查看容器状态：<code>docker ps -a | grep redis</code><br><img src="/images/20210713152014.png"></li>
-<li>查看redis服务：<code>docker logs -f redis-test</code>  </li>
-</ul>
-<h3 id="Redis-cli的使用"><a href="#Redis-cli的使用" class="headerlink" title="Redis-cli的使用"></a>Redis-cli的使用</h3><ul>
-<li>第一种：进入容器并使用redis-cli连接redis服务通过交互式终端来操作数据库：<code>docker exec -it redis-test redis-cli</code></li>
-<li>这里演示第二种: 先进入容器内的bash终端：<code>docker exec -it redis-test /bin/bash</code><blockquote>
-<p>接着执行 <code>redis-cli</code>进入redis-cli交互终端 , 输入 <code>auth 123456</code>进行鉴权<br><img src="/images/20210713170411.png"><br><code>quit</code> 退出 redis-cli客户端<br>String 类型操作命令 <code>set</code> <code>get</code> <code>keys</code> <code>del</code> <code>incr</code> 等等<br>Hash 类型操作指令 <code>hset</code> <code>hget</code> <code>hgetall</code> <code>hmset</code> 等等<br>List 类型操作指令 <code>rpop</code> <code>lpop</code> <code>rpush</code> <code>lpush</code> 等等<br>订阅 发布 <code>subscribe</code> <code>publish</code></p>
-<blockquote>
-<p>使用 <code>subscribe</code> + <code>主题名</code> 订阅主题<br><img src="/images/20210713172906.png"><br>使用 <code>publish</code> + <code>主题名</code> + <code>消息</code> 向对应主题发布消息<br><img src="/images/20210713172916.png"></p>
-</blockquote>
-</blockquote>
-</li>
-<li>服务相关 &amp; 备份恢复<blockquote>
+                <h3 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h3><ol>
+<li>使用CentOS7.6作为服务器，此处使用VirtualBox创建了一个虚拟机，网络模式是<strong>桥接</strong></li>
+<li>查看ip执行: <code>ip addr</code> 或者<code>ifconfig</code>, 使用ssh连接虚拟机：<code>ssh root@192.168.1.66</code></li>
+</ol>
+<h3 id="二、Apache服务安装"><a href="#二、Apache服务安装" class="headerlink" title="二、Apache服务安装"></a>二、Apache服务安装</h3><ol>
+<li>安装： <code>yum install -y httpd</code></li>
+<li>查看httpd服务状态：<code>systemctl status httpd</code>，此时默认是关闭状态; 或者执行：<code>ps -aux | grep httpd</code>查找httpd服务进程；</li>
+<li>开启httpd服务：<code>systemctl start httpd</code>； 再次查看状态：<code>systemctl status httpd</code></li>
+<li><code>systemctl enable httpd</code>将httpd服务设置为开机自启动;<br>(<code>systemctl disable httpd</code>关闭开机自启动)<br>(<code>systemctl is-enable httpd</code>查看httpd是否为开机自启动)</li>
+<li>使用主机的浏览器访问：127.0.0.1, 查看此时不能打开Apache提供的默认页面，这是因为防火墙中http服务的80端口没有放行导致</li>
+<li>查看目前开放的端口<code>firewall-cmd --list-ports</code></li>
+<li>放行80端口：<code>firewall-cmd --zone=public --add-port=tcp/80 --permanent</code></li>
+<li>重载防火墙配置：<code>firewall-cmd reload</code></li>
+<li>查看80端口：<code>firewall-cmd --zone=public --query-port=80/tcp</code></li>
+<li>刷新浏览器即可看到网页内容(默认内容就是 /var/www/html/index.html )</li>
+</ol>
+<h3 id="三、Apache服务器配置"><a href="#三、Apache服务器配置" class="headerlink" title="三、Apache服务器配置"></a>三、Apache服务器配置</h3><table>
+<thead>
+<tr>
+<th>配置文件名称</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>服务目录</td>
+<td>/etc/httpd</td>
+</tr>
+<tr>
+<td>主配置文件</td>
+<td>/etc/httpd/conf/httpd.conf</td>
+</tr>
+<tr>
+<td>网站数据目录</td>
+<td>/var/www/html</td>
+</tr>
+<tr>
+<td>访问日志</td>
+<td>/var/log/httpd/access_log</td>
+</tr>
+<tr>
+<td>错误日志</td>
+<td>/var/log/httpd/error_log</td>
+</tr>
+</tbody></table>
 <ol>
-<li><code>client list</code> 、 <code>client kill</code><blockquote>
-<p>登录 redis-cli 后，运行<code>client list</code>，返回所有连接到服务器的客户端信息和统计数据 <strong>idle</strong> 代表空闲时长 idle=0 是当前的client<br><code>client kill ip:port</code> 关闭客户端<br><img src="/images/20210713180050.png"></p>
-</blockquote>
-</li>
-<li><code>showlog</code> 调试redis的重要命令</li>
-<li>清空数据库的命令 <code>flushall</code>  <code>、flushdb</code> <strong>慎重</strong><blockquote>
-<p>flushall清空整个 Redis 服务器的数据(删除所有数据库的所有key)。<br>flushdb清空当前数据库中的所有 key。  </p>
-</blockquote>
-</li>
+<li>修改Apache服务默认主页：<blockquote>
+<ol>
+<li><code>mkdir /home/web</code>然后 <code>echo "Welcome to custom page" &gt; /home/web/index.html</code></li>
+<li><code>vim /etc/httpd/conf/httpd.conf</code>,</li>
+<li>将 DocumentRoot “/var/www/html” 修改为   DocumentRoot “/home/web”</li>
+<li>紧跟着将 &lt;Directory “/var/www/html”&gt;  修改为 &lt;Directory “/home/web”&gt; 保存退出<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818040135.png"></li>
+<li>刷新浏览器，仍然看到页面没有变化，原因就是 SELinux 的限制</li>
 </ol>
 </blockquote>
 </li>
+</ol>
+<h3 id="四、SELinux安全子系统"><a href="#四、SELinux安全子系统" class="headerlink" title="四、SELinux安全子系统"></a>四、SELinux安全子系统</h3><ol>
+<li>介绍</li>
+</ol>
+<ul>
+<li>SELinux是Security-Enhanced Linux的缩写,表示“安全增强型Linux”</li>
+<li>美国国家安全局(NSA)在Linux开源社区的帮助下开发的MAC(mandatory access control)的安全子系统</li>
+<li>SELinux的“双重保险”<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>域限制 (Domain Limitation)</td>
+<td>对服务程序的功能进行限制</td>
+</tr>
+<tr>
+<td>安全上下文 (Security Context)</td>
+<td>对文件资源的访问限制</td>
+</tr>
+</tbody></table>
+</li>
+<li>SELinux的三种配置模式<table>
+<thead>
+<tr>
+<th>配置模式</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>enforcing</td>
+<td>强制启用安全策略模式，将拦截服务的不合法请求</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>遇到服务越权访问时，只发出警告而不强制拦截</td>
+</tr>
+<tr>
+<td>disabled</td>
+<td>对于越权的行为不警告也不拦截</td>
+</tr>
+</tbody></table>
+</li>
 </ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/redis/redis">Github Redis</a></li>
-<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/redis">DockerHub Redis</a></li>
-<li><a target="_blank" rel="noopener" href="http://doc.redisfans.com/">Redis命令参考</a></li>
+<ol start="2">
+<li>设置</li>
+</ol>
+<ul>
+<li><code>sestatus</code>查看状态 （或者使用 <code>sestatus -v</code>显示更多信息）<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818043828.png"></li>
+<li><code>cat /etc/selinux/config</code> 查看配置,可以直接修改此配置文件，但是要等系统下次启动时才能生效<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818044227.png"></li>
+<li><code>getenforce</code> 得到 Enforcing</li>
+<li><code>setenforce 0</code>设置为’Permissive’并且立即生效，当系统重启时会失效</li>
+<li><code>getenforce</code> 得到 Permissive</li>
+<li>刷新网页看到自定义页面<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818041515.png"></li>
+<li><code>setenforce 1</code></li>
+<li><code>getenforce</code> 得到 Enforcing</li>
+<li>刷新网站，又看到了Apache的默认页面</li>
+<li><code>ls -Zd /var/www/html</code>得到安全上下文<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818045035.png"></li>
+<li><code>ls -Zd /home/web</code>得到安全上下文<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818045215.png"><br>对比可以看到差异</li>
+<li>需要将 ‘/home/web’ 的安全上下文修改成和 ‘/var/www/html’一致就行</li>
+<li><code>semanage</code>命令可能没有安装（<code>yum provides semanage</code> 得到需要安装’policycoreutils-python’工具）</li>
+<li><code>yum install -y policycoreutils-python</code></li>
+<li><code>semanage fcontext -a -t httpd_sys_content_t /home/web</code></li>
+<li><code>semanage fcontext -a -t httpd_sys_content_t /home/web/*</code></li>
+<li>使修改的上下文立即生效：<code>restorecon -Rv /home/web</code></li>
+<li><code>ls -Zd /home/web</code></li>
+<li>刷新页面，即看到新的页面</li>
 </ul>
 
                 
@@ -505,7 +564,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xiaosenmao.github.io/2021/07/13/redis-de-an-zhuang-shi-yong-jie-shao/">https://xiaosenmao.github.io/2021/07/13/redis-de-an-zhuang-shi-yong-jie-shao/</a>
+                    <a href="https://xiaosenmao.github.io/2021/08/18/apache-fu-wu-qi-an-zhuang-pei-zhi-yu-selinux-an-quan-zi-xi-tong/">https://xiaosenmao.github.io/2021/08/18/apache-fu-wu-qi-an-zhuang-pei-zhi-yu-selinux-an-quan-zi-xi-tong/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -543,12 +602,16 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Docker/">
-                                    <span class="chip bg-color">Docker</span>
+                                <a href="/tags/CentOS/">
+                                    <span class="chip bg-color">CentOS</span>
                                 </a>
                             
-                                <a href="/tags/Redis/">
-                                    <span class="chip bg-color">Redis</span>
+                                <a href="/tags/Apache/">
+                                    <span class="chip bg-color">Apache</span>
+                                </a>
+                            
+                                <a href="/tags/SELinux/">
+                                    <span class="chip bg-color">SELinux</span>
                                 </a>
                             
                         </div>
@@ -718,9 +781,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/08/18/apache-fu-wu-qi-an-zhuang-pei-zhi-yu-selinux-an-quan-zi-xi-tong/">
                     <div class="card-image">
@@ -738,9 +802,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-18
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-18
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -749,6 +813,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -775,13 +840,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/10/docker-qi-dong-mongodb-rong-qi/">
+                <a href="/2021/07/13/redis-de-an-zhuang-shi-yong-jie-shao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Docker启动MongoDB容器">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Redis的安装使用介绍">
                         
-                        <span class="card-title">Docker启动MongoDB容器</span>
+                        <span class="card-title">Redis的安装使用介绍</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -792,7 +857,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-13
                             </span>
                         <span class="publish-author">
                             
@@ -813,8 +878,8 @@
                         <span class="chip bg-color">Docker</span>
                     </a>
                     
-                    <a href="/tags/MongoDB/">
-                        <span class="chip bg-color">MongoDB</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
