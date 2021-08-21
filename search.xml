@@ -4,6 +4,60 @@
   
     
     <entry>
+      <title>Apache的虚拟主机功能</title>
+      <link href="/2021/08/21/apache-de-xu-ni-zhu-ji-gong-neng/"/>
+      <url>/2021/08/21/apache-de-xu-ni-zhu-ji-gong-neng/</url>
+      
+        <content type="html"><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><ul><li>服务器基于用户请求的不同IP地址、主机域名或者端口号</li><li>能够提供多个网站同时为外部提供服务的技术</li><li>用户请求的资源不同，获取的网页内容也不同</li></ul><h3 id="Apache的虚拟主机功能，基于IP地址的配置"><a href="#Apache的虚拟主机功能，基于IP地址的配置" class="headerlink" title="Apache的虚拟主机功能，基于IP地址的配置"></a>Apache的虚拟主机功能，基于IP地址的配置</h3><ol><li><code>nmtui</code>打开网卡设置,看到如下内容<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821150646.png"></li><li>新增两个IP地址 192.168.1.10 和 192.168.1.20  (/后面的<strong>24</strong>代表子网掩码为255.255.255.0)<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821150950.png"></li><li><code>systemctl restart network</code></li><li><code>cat /etc/sysconfig/network-scripts/ifcfg-enp0s3</code><br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821151237.png"></li><li><code>ping 192.168.1.10</code> 可以ping通，表示新增配置成功</li><li>新建目录和文件并且写入不同内容<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821152900.png"><br>（检查对应目录和目录下的所有文件的SELinux的安全上下文 <code>ls -Zd /home/web/</code> 和 <code>ls -Zd /home/web/*</code> 是否是 httpd_sys_content_t）</li><li>修改Apache服务配置文件<code>vim /etc/httpd/conf/httpd.conf</code><br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821152732.png"></li><li><code>systemctl restart httpd</code> ,然后访问对应ip<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821175951.png"> <img src="/images/QQ%E6%88%AA%E5%9B%BE20210821180143.png"></li></ol><h3 id="Apache的虚拟主机功能，基于域名的配置"><a href="#Apache的虚拟主机功能，基于域名的配置" class="headerlink" title="Apache的虚拟主机功能，基于域名的配置"></a>Apache的虚拟主机功能，基于域名的配置</h3><ol><li>在客户机上(CentOS7.6)上 <code>vim /etc/hosts</code></li><li>添加服务器ip和域名 <img src="/images/QQ%E6%88%AA%E5%9B%BE20210821183337.png"></li><li>测试结果<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821181724.png"><br>打开 <a href="http://www.test.com,结果得到正确的内容/">http://www.test.com，结果得到正确的内容</a><br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821181922.png"></li><li>配置服务器<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821183033.png"></li><li>访问 http:<a href="http://www.test.com/">www.test.com</a> 看到<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821183204.png"></li><li>访问 http:bbs.test.com 看到<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821183541.png"></li><li>删除服务器目录<code>rm -rf /home/web/10</code> 和 <code>rm -rf /home/web/20</code></li><li><code>vim /etc/httpd/conf/httpd.conf</code> 删除前面的两个基于ip的配置，剩下内容为：<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821183912.png"></li><li><code>systemctl restart httpd</code></li><li>重复 5，6的步骤，查看基于域名配置的网页内容</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CentOS </tag>
+            
+            <tag> Apache </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>DHCP动态IP和静态IP配置</title>
+      <link href="/2021/08/21/dhcp-dong-tai-ip-he-jing-tai-ip-pei-zhi/"/>
+      <url>/2021/08/21/dhcp-dong-tai-ip-he-jing-tai-ip-pei-zhi/</url>
+      
+        <content type="html"><![CDATA[<h3 id="DHCP介绍"><a href="#DHCP介绍" class="headerlink" title="DHCP介绍"></a>DHCP介绍</h3><ol><li>动态主机设置协议（英语：Dynamic Host Configuration Protocol，缩写：DHCP），又称动态主机组态协定，是一个用于IP网络的网络协议，位于OSI模型的应用层，使用<strong>UDP</strong>协议工作，仅限于局域网内部使用的协议</li></ol><ul><li>主要用于局域网环境或存在较多办公设备的局域网环境中</li><li>主要为局域网内部的设备或者网络供应商自动分配IP地址等参数</li><li>可以自动管理主机的IP地址、子网掩码、网关、DNS地址等参数</li></ul><ol start="2"><li>原理</li></ol><ul><li>动态主机设置协议（DHCP）是一种使网络管理员能够集中管理和自动分配IP网络地址的通信协议。在IP网络中，每个连接Internet的设备都需要分配唯一的IP地址。DHCP使网络管理员能从中心结点监控和分配IP地址。当某台计算机移到网络中的其它位置时，能自动收到新的IP地址。</li><li>DHCP使用了<strong>租约</strong>的概念，或称为计算机IP地址的有效期。租用时间是不定的，主要取决于用户在某地连接Internet需要多久，这对于教育行业和其它用户频繁<br>改变的环境是很实用的。透过较短的租期，DHCP能够在一个计算机比可用IP地址多的环境中动态地重新配置网络。DHCP支持为计算机分配静态地址，如需要永久性IP地址的Web服务器。</li><li>DHCP和另一个网络IP管理协议BOOTP类似。目前两种配置管理协议都得到了普遍使用，其中DHCP更为先进。某些操作系统，如Windows Server，带有DHCP服务器。</li></ul><h3 id="DHCP配置IP"><a href="#DHCP配置IP" class="headerlink" title="DHCP配置IP"></a>DHCP配置IP</h3><ol><li>一般默认使用的是动态配置，具体方法就不做介绍了。</li><li>配置静态IP<blockquote><ol><li><code>ifconfig</code>查看本机网络信息<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821142255.png"><br>或者使用桌面系统来查看<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821144651.png"></li><li>根据上面的信息,在我的CentOS7.6虚拟机上(桥接)配置IP，执行 <code>vim /etc/sysconfig/network-scripts/ifcfg-enp0s3</code>，修改为下图所示（static,ip,netmask,gateway,dns服务）<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821141823.png"><br>另外也可以使用类似<code>nmtui</code>之类的GUI工具来修改，就不做介绍了</li><li><code>systemctl restart network</code></li><li>查看主机ip <code>ifconfig</code>，已经修改成功<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821142942.png"></li><li>使用ssh连接测试 <code>ssh root@192.168.1.66</code>，如下<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821143137.png"></li></ol></blockquote></li></ol><h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol><li><a href="https://zh.wikipedia.org/zh-cn/%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E8%AE%BE%E7%BD%AE%E5%8D%8F%E8%AE%AE">维基百科DHCP</a></li><li><a href="https://baike.baidu.com/item/DHCP/218195?fr=aladdin">百度百科DHCP</a></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CentOS </tag>
+            
+            <tag> DHCP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Apache服务器安装配置与SELinux安全子系统</title>
       <link href="/2021/08/18/apache-fu-wu-qi-an-zhuang-pei-zhi-yu-selinux-an-quan-zi-xi-tong/"/>
       <url>/2021/08/18/apache-fu-wu-qi-an-zhuang-pei-zhi-yu-selinux-an-quan-zi-xi-tong/</url>

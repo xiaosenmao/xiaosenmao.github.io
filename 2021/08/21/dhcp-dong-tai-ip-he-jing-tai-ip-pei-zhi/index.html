@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Apache服务器安装配置与SELinux安全子系统, 个人博客 前端 HTML5 CSS">
+    <meta name="keywords" content="DHCP动态IP和静态IP配置, 个人博客 前端 HTML5 CSS">
     <meta name="description" content="个人博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Apache服务器安装配置与SELinux安全子系统 | Hi</title>
+    <title>DHCP动态IP和静态IP配置 | Hi</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -227,12 +227,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Apache服务器安装配置与SELinux安全子系统</h1>
+                    <h1 class="description center-align post-title">DHCP动态IP和静态IP配置</h1>
                 </div>
             </div>
         </div>
@@ -352,12 +352,8 @@
                                 <span class="chip bg-color">CentOS</span>
                             </a>
                         
-                            <a href="/tags/Apache/">
-                                <span class="chip bg-color">Apache</span>
-                            </a>
-                        
-                            <a href="/tags/SELinux/">
-                                <span class="chip bg-color">SELinux</span>
+                            <a href="/tags/DHCP/">
+                                <span class="chip bg-color">DHCP</span>
                             </a>
                         
                     </div>
@@ -381,28 +377,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-08-18
+                    2021-08-21
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-19
+                    2021-08-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    831
+                    607
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    2 分
                 </div>
                 
 
@@ -422,131 +418,39 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h3><ol>
-<li>使用CentOS7.6作为服务器，此处使用VirtualBox创建了一个虚拟机，网络模式是<strong>桥接</strong></li>
-<li>查看ip执行: <code>ip addr</code> 或者<code>ifconfig</code>, 使用ssh连接虚拟机：<code>ssh root@192.168.1.66</code></li>
+                <h3 id="DHCP介绍"><a href="#DHCP介绍" class="headerlink" title="DHCP介绍"></a>DHCP介绍</h3><ol>
+<li>动态主机设置协议（英语：Dynamic Host Configuration Protocol，缩写：DHCP），又称动态主机组态协定，是一个用于IP网络的网络协议，位于OSI模型的应用层，使用<strong>UDP</strong>协议工作，仅限于局域网内部使用的协议</li>
 </ol>
-<h3 id="二、Apache服务安装"><a href="#二、Apache服务安装" class="headerlink" title="二、Apache服务安装"></a>二、Apache服务安装</h3><ol>
-<li>安装： <code>yum install -y httpd</code></li>
-<li>查看httpd服务状态：<code>systemctl status httpd</code>，此时默认是关闭状态; 或者执行：<code>ps -aux | grep httpd</code>查找httpd服务进程；</li>
-<li>开启httpd服务：<code>systemctl start httpd</code>； 再次查看状态：<code>systemctl status httpd</code></li>
-<li><code>systemctl enable httpd</code>将httpd服务设置为开机自启动;<br>(<code>systemctl disable httpd</code>关闭开机自启动)<br>(<code>systemctl is-enable httpd</code>查看httpd是否为开机自启动)</li>
-<li>使用主机的浏览器访问：127.0.0.1, 查看此时不能打开Apache提供的默认页面，这是因为防火墙中http服务的80端口没有放行导致</li>
-<li>查看目前开放的端口<code>firewall-cmd --list-ports</code></li>
-<li>放行80端口：<code>firewall-cmd --zone=public --add-port=tcp/80 --permanent</code></li>
-<li>重载防火墙配置：<code>firewall-cmd reload</code></li>
-<li>查看80端口：<code>firewall-cmd --zone=public --query-port=80/tcp</code></li>
-<li>刷新浏览器即可看到网页内容(默认内容就是 /var/www/html/index.html )</li>
+<ul>
+<li>主要用于局域网环境或存在较多办公设备的局域网环境中</li>
+<li>主要为局域网内部的设备或者网络供应商自动分配IP地址等参数</li>
+<li>可以自动管理主机的IP地址、子网掩码、网关、DNS地址等参数</li>
+</ul>
+<ol start="2">
+<li>原理</li>
 </ol>
-<h3 id="三、Apache服务器配置"><a href="#三、Apache服务器配置" class="headerlink" title="三、Apache服务器配置"></a>三、Apache服务器配置</h3><table>
-<thead>
-<tr>
-<th>配置文件名称</th>
-<th>位置</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>服务目录</td>
-<td>/etc/httpd</td>
-</tr>
-<tr>
-<td>主配置文件</td>
-<td>/etc/httpd/conf/httpd.conf</td>
-</tr>
-<tr>
-<td>网站数据目录</td>
-<td>/var/www/html</td>
-</tr>
-<tr>
-<td>访问日志</td>
-<td>/var/log/httpd/access_log</td>
-</tr>
-<tr>
-<td>错误日志</td>
-<td>/var/log/httpd/error_log</td>
-</tr>
-</tbody></table>
+<ul>
+<li>动态主机设置协议（DHCP）是一种使网络管理员能够集中管理和自动分配IP网络地址的通信协议。在IP网络中，每个连接Internet的设备都需要分配唯一的IP地址。DHCP使网络管理员能从中心结点监控和分配IP地址。当某台计算机移到网络中的其它位置时，能自动收到新的IP地址。</li>
+<li>DHCP使用了<strong>租约</strong>的概念，或称为计算机IP地址的有效期。租用时间是不定的，主要取决于用户在某地连接Internet需要多久，这对于教育行业和其它用户频繁<br>改变的环境是很实用的。透过较短的租期，DHCP能够在一个计算机比可用IP地址多的环境中动态地重新配置网络。DHCP支持为计算机分配静态地址，如需要永久性IP地址的Web服务器。</li>
+<li>DHCP和另一个网络IP管理协议BOOTP类似。目前两种配置管理协议都得到了普遍使用，其中DHCP更为先进。某些操作系统，如Windows Server，带有DHCP服务器。</li>
+</ul>
+<h3 id="DHCP配置IP"><a href="#DHCP配置IP" class="headerlink" title="DHCP配置IP"></a>DHCP配置IP</h3><ol>
+<li>一般默认使用的是动态配置，具体方法就不做介绍了。</li>
+<li>配置静态IP<blockquote>
 <ol>
-<li>修改Apache服务默认主页：<blockquote>
-<ol>
-<li><code>mkdir /home/web</code>然后 <code>echo "Welcome to custom page" &gt; /home/web/index.html</code></li>
-<li><code>vim /etc/httpd/conf/httpd.conf</code>,</li>
-<li>将 DocumentRoot “/var/www/html” 修改为   DocumentRoot “/home/web”</li>
-<li>紧跟着将 &lt;Directory “/var/www/html”&gt;  修改为 &lt;Directory “/home/web”&gt; 保存退出<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818040135.png"></li>
-<li>刷新浏览器，仍然看到页面没有变化，原因就是 SELinux 的限制</li>
+<li><code>ifconfig</code>查看本机网络信息<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821142255.png"><br>或者使用桌面系统来查看<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821144651.png"></li>
+<li>根据上面的信息,在我的CentOS7.6虚拟机上(桥接)配置IP，执行 <code>vim /etc/sysconfig/network-scripts/ifcfg-enp0s3</code>，修改为下图所示（static,ip,netmask,gateway,dns服务）<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821141823.png"><br>另外也可以使用类似<code>nmtui</code>之类的GUI工具来修改，就不做介绍了</li>
+<li><code>systemctl restart network</code></li>
+<li>查看主机ip <code>ifconfig</code>，已经修改成功<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821142942.png"></li>
+<li>使用ssh连接测试 <code>ssh root@192.168.1.66</code>，如下<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821143137.png"></li>
 </ol>
 </blockquote>
 </li>
 </ol>
-<h3 id="四、SELinux安全子系统"><a href="#四、SELinux安全子系统" class="headerlink" title="四、SELinux安全子系统"></a>四、SELinux安全子系统</h3><ol>
-<li>介绍</li>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-cn/%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E8%AE%BE%E7%BD%AE%E5%8D%8F%E8%AE%AE">维基百科DHCP</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/DHCP/218195?fr=aladdin">百度百科DHCP</a></li>
 </ol>
-<ul>
-<li>SELinux是Security-Enhanced Linux的缩写,表示“安全增强型Linux”</li>
-<li>美国国家安全局(NSA)在Linux开源社区的帮助下开发的MAC(mandatory access control)的安全子系统</li>
-<li>SELinux的“双重保险”<table>
-<thead>
-<tr>
-<th>模式</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>域限制 (Domain Limitation)</td>
-<td>对服务程序的功能进行限制</td>
-</tr>
-<tr>
-<td>安全上下文 (Security Context)</td>
-<td>对文件资源的访问限制</td>
-</tr>
-</tbody></table>
-</li>
-<li>SELinux的三种配置模式<table>
-<thead>
-<tr>
-<th>配置模式</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>enforcing</td>
-<td>强制启用安全策略模式，将拦截服务的不合法请求</td>
-</tr>
-<tr>
-<td>permissive</td>
-<td>遇到服务越权访问时，只发出警告而不强制拦截</td>
-</tr>
-<tr>
-<td>disabled</td>
-<td>对于越权的行为不警告也不拦截</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<ol start="2">
-<li>设置</li>
-</ol>
-<ul>
-<li><code>sestatus</code>查看状态 （或者使用 <code>sestatus -v</code>显示更多信息）<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818043828.png"></li>
-<li><code>cat /etc/selinux/config</code> 查看配置,可以直接修改此配置文件，但是要等系统下次启动时才能生效<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818044227.png"></li>
-<li><code>getenforce</code> 得到 Enforcing</li>
-<li><code>setenforce 0</code>设置为’Permissive’并且立即生效，当系统重启时会失效</li>
-<li><code>getenforce</code> 得到 Permissive</li>
-<li>刷新网页看到自定义页面<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818041515.png"></li>
-<li><code>setenforce 1</code></li>
-<li><code>getenforce</code> 得到 Enforcing</li>
-<li>刷新网站，又看到了Apache的默认页面</li>
-<li><code>ls -Zd /var/www/html</code>得到安全上下文<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818045035.png"></li>
-<li><code>ls -Zd /home/web</code>得到安全上下文<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818045215.png"><br>对比可以看到差异</li>
-<li>需要将 ‘/home/web’ 的安全上下文修改成和 ‘/var/www/html’一致就行</li>
-<li><code>semanage</code>命令可能没有安装（<code>yum provides semanage</code> 得到需要安装’policycoreutils-python’工具）</li>
-<li><code>yum install -y policycoreutils-python</code></li>
-<li><code>semanage fcontext -a -t httpd_sys_content_t /home/web</code></li>
-<li><code>semanage fcontext -a -t httpd_sys_content_t /home/web/*</code></li>
-<li>使修改的上下文立即生效：<code>restorecon -Rv /home/web</code></li>
-<li><code>ls -Zd /home/web</code></li>
-<li>刷新页面，即看到新的页面</li>
-</ul>
 
                 
             </div>
@@ -573,7 +477,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xiaosenmao.github.io/2021/08/18/apache-fu-wu-qi-an-zhuang-pei-zhi-yu-selinux-an-quan-zi-xi-tong/">https://xiaosenmao.github.io/2021/08/18/apache-fu-wu-qi-an-zhuang-pei-zhi-yu-selinux-an-quan-zi-xi-tong/</a>
+                    <a href="https://xiaosenmao.github.io/2021/08/21/dhcp-dong-tai-ip-he-jing-tai-ip-pei-zhi/">https://xiaosenmao.github.io/2021/08/21/dhcp-dong-tai-ip-he-jing-tai-ip-pei-zhi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -615,12 +519,8 @@
                                     <span class="chip bg-color">CentOS</span>
                                 </a>
                             
-                                <a href="/tags/Apache/">
-                                    <span class="chip bg-color">Apache</span>
-                                </a>
-                            
-                                <a href="/tags/SELinux/">
-                                    <span class="chip bg-color">SELinux</span>
+                                <a href="/tags/DHCP/">
+                                    <span class="chip bg-color">DHCP</span>
                                 </a>
                             
                         </div>
@@ -794,13 +694,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/08/21/dhcp-dong-tai-ip-he-jing-tai-ip-pei-zhi/">
+                <a href="/2021/08/21/apache-de-xu-ni-zhu-ji-gong-neng/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="DHCP动态IP和静态IP配置">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Apache的虚拟主机功能">
                         
-                        <span class="card-title">DHCP动态IP和静态IP配置</span>
+                        <span class="card-title">Apache的虚拟主机功能</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -832,8 +732,8 @@
                         <span class="chip bg-color">CentOS</span>
                     </a>
                     
-                    <a href="/tags/DHCP/">
-                        <span class="chip bg-color">DHCP</span>
+                    <a href="/tags/Apache/">
+                        <span class="chip bg-color">Apache</span>
                     </a>
                     
                 </div>
@@ -847,13 +747,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/13/redis-de-an-zhuang-shi-yong-jie-shao/">
+                <a href="/2021/08/18/apache-fu-wu-qi-an-zhuang-pei-zhi-yu-selinux-an-quan-zi-xi-tong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Redis的安装使用介绍">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Apache服务器安装配置与SELinux安全子系统">
                         
-                        <span class="card-title">Redis的安装使用介绍</span>
+                        <span class="card-title">Apache服务器安装配置与SELinux安全子系统</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -864,14 +764,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-13
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-18
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Docker/" class="post-category">
-                                    Docker
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
                                 </a>
                             
                             
@@ -881,12 +781,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Docker/">
-                        <span class="chip bg-color">Docker</span>
+                    <a href="/tags/CentOS/">
+                        <span class="chip bg-color">CentOS</span>
                     </a>
                     
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
+                    <a href="/tags/Apache/">
+                        <span class="chip bg-color">Apache</span>
+                    </a>
+                    
+                    <a href="/tags/SELinux/">
+                        <span class="chip bg-color">SELinux</span>
                     </a>
                     
                 </div>

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Apache服务器安装配置与SELinux安全子系统, 个人博客 前端 HTML5 CSS">
+    <meta name="keywords" content="Apache的虚拟主机功能, 个人博客 前端 HTML5 CSS">
     <meta name="description" content="个人博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Apache服务器安装配置与SELinux安全子系统 | Hi</title>
+    <title>Apache的虚拟主机功能 | Hi</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -227,12 +227,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Apache服务器安装配置与SELinux安全子系统</h1>
+                    <h1 class="description center-align post-title">Apache的虚拟主机功能</h1>
                 </div>
             </div>
         </div>
@@ -356,10 +356,6 @@
                                 <span class="chip bg-color">Apache</span>
                             </a>
                         
-                            <a href="/tags/SELinux/">
-                                <span class="chip bg-color">SELinux</span>
-                            </a>
-                        
                     </div>
                     
                 </div>
@@ -381,28 +377,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-08-18
+                    2021-08-21
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-19
+                    2021-08-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    831
+                    366
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    1 分
                 </div>
                 
 
@@ -422,131 +418,33 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h3><ol>
-<li>使用CentOS7.6作为服务器，此处使用VirtualBox创建了一个虚拟机，网络模式是<strong>桥接</strong></li>
-<li>查看ip执行: <code>ip addr</code> 或者<code>ifconfig</code>, 使用ssh连接虚拟机：<code>ssh root@192.168.1.66</code></li>
-</ol>
-<h3 id="二、Apache服务安装"><a href="#二、Apache服务安装" class="headerlink" title="二、Apache服务安装"></a>二、Apache服务安装</h3><ol>
-<li>安装： <code>yum install -y httpd</code></li>
-<li>查看httpd服务状态：<code>systemctl status httpd</code>，此时默认是关闭状态; 或者执行：<code>ps -aux | grep httpd</code>查找httpd服务进程；</li>
-<li>开启httpd服务：<code>systemctl start httpd</code>； 再次查看状态：<code>systemctl status httpd</code></li>
-<li><code>systemctl enable httpd</code>将httpd服务设置为开机自启动;<br>(<code>systemctl disable httpd</code>关闭开机自启动)<br>(<code>systemctl is-enable httpd</code>查看httpd是否为开机自启动)</li>
-<li>使用主机的浏览器访问：127.0.0.1, 查看此时不能打开Apache提供的默认页面，这是因为防火墙中http服务的80端口没有放行导致</li>
-<li>查看目前开放的端口<code>firewall-cmd --list-ports</code></li>
-<li>放行80端口：<code>firewall-cmd --zone=public --add-port=tcp/80 --permanent</code></li>
-<li>重载防火墙配置：<code>firewall-cmd reload</code></li>
-<li>查看80端口：<code>firewall-cmd --zone=public --query-port=80/tcp</code></li>
-<li>刷新浏览器即可看到网页内容(默认内容就是 /var/www/html/index.html )</li>
-</ol>
-<h3 id="三、Apache服务器配置"><a href="#三、Apache服务器配置" class="headerlink" title="三、Apache服务器配置"></a>三、Apache服务器配置</h3><table>
-<thead>
-<tr>
-<th>配置文件名称</th>
-<th>位置</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>服务目录</td>
-<td>/etc/httpd</td>
-</tr>
-<tr>
-<td>主配置文件</td>
-<td>/etc/httpd/conf/httpd.conf</td>
-</tr>
-<tr>
-<td>网站数据目录</td>
-<td>/var/www/html</td>
-</tr>
-<tr>
-<td>访问日志</td>
-<td>/var/log/httpd/access_log</td>
-</tr>
-<tr>
-<td>错误日志</td>
-<td>/var/log/httpd/error_log</td>
-</tr>
-</tbody></table>
-<ol>
-<li>修改Apache服务默认主页：<blockquote>
-<ol>
-<li><code>mkdir /home/web</code>然后 <code>echo "Welcome to custom page" &gt; /home/web/index.html</code></li>
-<li><code>vim /etc/httpd/conf/httpd.conf</code>,</li>
-<li>将 DocumentRoot “/var/www/html” 修改为   DocumentRoot “/home/web”</li>
-<li>紧跟着将 &lt;Directory “/var/www/html”&gt;  修改为 &lt;Directory “/home/web”&gt; 保存退出<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818040135.png"></li>
-<li>刷新浏览器，仍然看到页面没有变化，原因就是 SELinux 的限制</li>
-</ol>
-</blockquote>
-</li>
-</ol>
-<h3 id="四、SELinux安全子系统"><a href="#四、SELinux安全子系统" class="headerlink" title="四、SELinux安全子系统"></a>四、SELinux安全子系统</h3><ol>
-<li>介绍</li>
-</ol>
-<ul>
-<li>SELinux是Security-Enhanced Linux的缩写,表示“安全增强型Linux”</li>
-<li>美国国家安全局(NSA)在Linux开源社区的帮助下开发的MAC(mandatory access control)的安全子系统</li>
-<li>SELinux的“双重保险”<table>
-<thead>
-<tr>
-<th>模式</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>域限制 (Domain Limitation)</td>
-<td>对服务程序的功能进行限制</td>
-</tr>
-<tr>
-<td>安全上下文 (Security Context)</td>
-<td>对文件资源的访问限制</td>
-</tr>
-</tbody></table>
-</li>
-<li>SELinux的三种配置模式<table>
-<thead>
-<tr>
-<th>配置模式</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>enforcing</td>
-<td>强制启用安全策略模式，将拦截服务的不合法请求</td>
-</tr>
-<tr>
-<td>permissive</td>
-<td>遇到服务越权访问时，只发出警告而不强制拦截</td>
-</tr>
-<tr>
-<td>disabled</td>
-<td>对于越权的行为不警告也不拦截</td>
-</tr>
-</tbody></table>
-</li>
+                <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><ul>
+<li>服务器基于用户请求的不同IP地址、主机域名或者端口号</li>
+<li>能够提供多个网站同时为外部提供服务的技术</li>
+<li>用户请求的资源不同，获取的网页内容也不同</li>
 </ul>
-<ol start="2">
-<li>设置</li>
+<h3 id="Apache的虚拟主机功能，基于IP地址的配置"><a href="#Apache的虚拟主机功能，基于IP地址的配置" class="headerlink" title="Apache的虚拟主机功能，基于IP地址的配置"></a>Apache的虚拟主机功能，基于IP地址的配置</h3><ol>
+<li><code>nmtui</code>打开网卡设置,看到如下内容<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821150646.png"></li>
+<li>新增两个IP地址 192.168.1.10 和 192.168.1.20  (/后面的<strong>24</strong>代表子网掩码为255.255.255.0)<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821150950.png"></li>
+<li><code>systemctl restart network</code></li>
+<li><code>cat /etc/sysconfig/network-scripts/ifcfg-enp0s3</code><br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821151237.png"></li>
+<li><code>ping 192.168.1.10</code> 可以ping通，表示新增配置成功</li>
+<li>新建目录和文件并且写入不同内容<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821152900.png"><br>（检查对应目录和目录下的所有文件的SELinux的安全上下文 <code>ls -Zd /home/web/</code> 和 <code>ls -Zd /home/web/*</code> 是否是 httpd_sys_content_t）</li>
+<li>修改Apache服务配置文件<code>vim /etc/httpd/conf/httpd.conf</code><br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821152732.png"></li>
+<li><code>systemctl restart httpd</code> ,然后访问对应ip<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821175951.png"> <img src="/images/QQ%E6%88%AA%E5%9B%BE20210821180143.png"></li>
 </ol>
-<ul>
-<li><code>sestatus</code>查看状态 （或者使用 <code>sestatus -v</code>显示更多信息）<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818043828.png"></li>
-<li><code>cat /etc/selinux/config</code> 查看配置,可以直接修改此配置文件，但是要等系统下次启动时才能生效<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818044227.png"></li>
-<li><code>getenforce</code> 得到 Enforcing</li>
-<li><code>setenforce 0</code>设置为’Permissive’并且立即生效，当系统重启时会失效</li>
-<li><code>getenforce</code> 得到 Permissive</li>
-<li>刷新网页看到自定义页面<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818041515.png"></li>
-<li><code>setenforce 1</code></li>
-<li><code>getenforce</code> 得到 Enforcing</li>
-<li>刷新网站，又看到了Apache的默认页面</li>
-<li><code>ls -Zd /var/www/html</code>得到安全上下文<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818045035.png"></li>
-<li><code>ls -Zd /home/web</code>得到安全上下文<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210818045215.png"><br>对比可以看到差异</li>
-<li>需要将 ‘/home/web’ 的安全上下文修改成和 ‘/var/www/html’一致就行</li>
-<li><code>semanage</code>命令可能没有安装（<code>yum provides semanage</code> 得到需要安装’policycoreutils-python’工具）</li>
-<li><code>yum install -y policycoreutils-python</code></li>
-<li><code>semanage fcontext -a -t httpd_sys_content_t /home/web</code></li>
-<li><code>semanage fcontext -a -t httpd_sys_content_t /home/web/*</code></li>
-<li>使修改的上下文立即生效：<code>restorecon -Rv /home/web</code></li>
-<li><code>ls -Zd /home/web</code></li>
-<li>刷新页面，即看到新的页面</li>
-</ul>
+<h3 id="Apache的虚拟主机功能，基于域名的配置"><a href="#Apache的虚拟主机功能，基于域名的配置" class="headerlink" title="Apache的虚拟主机功能，基于域名的配置"></a>Apache的虚拟主机功能，基于域名的配置</h3><ol>
+<li>在客户机上(CentOS7.6)上 <code>vim /etc/hosts</code></li>
+<li>添加服务器ip和域名 <img src="/images/QQ%E6%88%AA%E5%9B%BE20210821183337.png"></li>
+<li>测试结果<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821181724.png"><br>打开 <a target="_blank" rel="noopener" href="http://www.test.com,结果得到正确的内容/">http://www.test.com，结果得到正确的内容</a><br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821181922.png"></li>
+<li>配置服务器<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821183033.png"></li>
+<li>访问 http:<a target="_blank" rel="noopener" href="http://www.test.com/">www.test.com</a> 看到<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821183204.png"></li>
+<li>访问 http:bbs.test.com 看到<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821183541.png"></li>
+<li>删除服务器目录<code>rm -rf /home/web/10</code> 和 <code>rm -rf /home/web/20</code></li>
+<li><code>vim /etc/httpd/conf/httpd.conf</code> 删除前面的两个基于ip的配置，剩下内容为：<br><img src="/images/QQ%E6%88%AA%E5%9B%BE20210821183912.png"></li>
+<li><code>systemctl restart httpd</code></li>
+<li>重复 5，6的步骤，查看基于域名配置的网页内容</li>
+</ol>
 
                 
             </div>
@@ -573,7 +471,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xiaosenmao.github.io/2021/08/18/apache-fu-wu-qi-an-zhuang-pei-zhi-yu-selinux-an-quan-zi-xi-tong/">https://xiaosenmao.github.io/2021/08/18/apache-fu-wu-qi-an-zhuang-pei-zhi-yu-selinux-an-quan-zi-xi-tong/</a>
+                    <a href="https://xiaosenmao.github.io/2021/08/21/apache-de-xu-ni-zhu-ji-gong-neng/">https://xiaosenmao.github.io/2021/08/21/apache-de-xu-ni-zhu-ji-gong-neng/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -617,10 +515,6 @@
                             
                                 <a href="/tags/Apache/">
                                     <span class="chip bg-color">Apache</span>
-                                </a>
-                            
-                                <a href="/tags/SELinux/">
-                                    <span class="chip bg-color">SELinux</span>
                                 </a>
                             
                         </div>
@@ -790,9 +684,64 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2021/08/21/apache-de-xu-ni-zhu-ji-gong-neng/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Apache的虚拟主机功能">
+                        
+                        <span class="card-title">Apache的虚拟主机功能</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CentOS/">
+                        <span class="chip bg-color">CentOS</span>
+                    </a>
+                    
+                    <a href="/tags/Apache/">
+                        <span class="chip bg-color">Apache</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2021/08/21/dhcp-dong-tai-ip-he-jing-tai-ip-pei-zhi/">
                     <div class="card-image">
@@ -810,9 +759,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-08-21
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-21
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -834,59 +783,6 @@
                     
                     <a href="/tags/DHCP/">
                         <span class="chip bg-color">DHCP</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/07/13/redis-de-an-zhuang-shi-yong-jie-shao/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Redis的安装使用介绍">
-                        
-                        <span class="card-title">Redis的安装使用介绍</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-13
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Docker/" class="post-category">
-                                    Docker
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Docker/">
-                        <span class="chip bg-color">Docker</span>
-                    </a>
-                    
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
