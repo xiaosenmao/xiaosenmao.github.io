@@ -388,7 +388,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-08-19
+                    2021-08-22
                 </div>
                 
 
@@ -417,6 +417,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -433,7 +436,7 @@
 <li><code>systemctl enable httpd</code>将httpd服务设置为开机自启动;<br>(<code>systemctl disable httpd</code>关闭开机自启动)<br>(<code>systemctl is-enable httpd</code>查看httpd是否为开机自启动)</li>
 <li>使用主机的浏览器访问：127.0.0.1, 查看此时不能打开Apache提供的默认页面，这是因为防火墙中http服务的80端口没有放行导致</li>
 <li>查看目前开放的端口<code>firewall-cmd --list-ports</code></li>
-<li>放行80端口：<code>firewall-cmd --zone=public --add-port=tcp/80 --permanent</code></li>
+<li>放行80端口：<code>firewall-cmd --zone=public --add-port=80/tcp --permanent</code></li>
 <li>重载防火墙配置：<code>firewall-cmd reload</code></li>
 <li>查看80端口：<code>firewall-cmd --zone=public --query-port=80/tcp</code></li>
 <li>刷新浏览器即可看到网页内容(默认内容就是 /var/www/html/index.html )</li>

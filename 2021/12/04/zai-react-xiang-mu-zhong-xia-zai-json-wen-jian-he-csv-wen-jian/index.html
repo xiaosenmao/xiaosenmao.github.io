@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CentOS系统中使用Docker启动MySQL, 个人博客 前端 HTML5 CSS">
+    <meta name="keywords" content="在React项目中下载JSON文件和CSV文件, 个人博客 前端 HTML5 CSS">
     <meta name="description" content="个人博客">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>CentOS系统中使用Docker启动MySQL | Hi</title>
+    <title>在React项目中下载JSON文件和CSV文件 | Hi</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -227,12 +227,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">CentOS系统中使用Docker启动MySQL</h1>
+                    <h1 class="description center-align post-title">在React项目中下载JSON文件和CSV文件</h1>
                 </div>
             </div>
         </div>
@@ -348,12 +348,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Docker/">
-                                <span class="chip bg-color">Docker</span>
+                            <a href="/tags/React/">
+                                <span class="chip bg-color">React</span>
                             </a>
                         
-                            <a href="/tags/MySQL/">
-                                <span class="chip bg-color">MySQL</span>
+                            <a href="/tags/URL/">
+                                <span class="chip bg-color">URL</span>
                             </a>
                         
                     </div>
@@ -364,8 +364,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Docker/" class="post-category">
-                                Docker
+                            <a href="/categories/FrontEnd/" class="post-category">
+                                FrontEnd
                             </a>
                         
                     </div>
@@ -377,28 +377,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-07-10
+                    2021-12-04
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-07-10
+                    2021-12-04
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    328
+                    489
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -421,42 +421,143 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="一、Docker安装"><a href="#一、Docker安装" class="headerlink" title="一、Docker安装"></a>一、Docker安装</h3><blockquote>
-<p>安装docker可以参考<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install">官方文档</a></p>
-<ol>
-<li>安装完成后查看docker进程状态,执行命令：<code>systemctl status docker</code>,结果为：<strong>inactive</strong><br><img src="/images/docker%E7%8A%B6%E6%80%81.png"></li>
-<li>接下来启动docker进程，执行命令：<code>systemctl start docker</code><br><img src="/images/docker%E5%90%AF%E5%8A%A8%E5%90%8E.png"></li>
-<li>下载测试hello-world镜像并在容器中运行。当容器运行时，它会打印一条信息性消息并退出。 执行命令：<code>docker run hello-world</code><br><img src="/images/dockerhelloworld.png"></li>
+                <p>一些网站允许用户在web应用中将表格数据导出并以<strong>JSON</strong>和<strong>CSV</strong>格式下载它们。</p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ol>
+<li>NodeJS环境</li>
+<li>快速创建React工程：<br><code>npm init vite@latest download_csv_json_file --template react</code></li>
+<li>进入工程：<code>cd download_csv_json_file</code><br>安装依赖： <code>npm install</code><br>运行项目：<code>npm run dev</code><br>查看项目：浏览器打开地址：<a href="http://localhost:3000，可以看到默认的工程页面。">http://localhost:3000，可以看到默认的工程页面。</a></li>
 </ol>
-</blockquote>
-<h3 id="二、Docker启动MySQL"><a href="#二、Docker启动MySQL" class="headerlink" title="二、Docker启动MySQL"></a>二、Docker启动MySQL</h3><blockquote>
-<ol>
-<li>执行命令：<code>docker run --name mysql-demo1 -e MYSQL_ROOT_PASSWORD=123456 -p 3306:3306 -d mysql</code>结果如下图所示<blockquote>
-<p><code>--name</code>指定容器名称为 mysql-demo1<br><code>-e</code>设置环境变量,设置MySQL服务root用户的密码<br><code>-p</code>映射容器服务的3306端口到宿主机的3306端口，这样外部主机可以直接通过宿主机ip:3306访问到MySQL的服务。（前面的3306为宿主机端口，后面的3306是docker容器中mysql服务的端口）<br><code>-d</code>设置后台运行<br><img src="/images/docker-mysql-demo1.png"></p>
-</blockquote>
-</li>
-<li>使用客户端工具Navicat连接容器中的mysql<br>如果出现如下错误,可以尝试如下解决方法<br><img src="/images/20210709014246.png"><blockquote>
-<ul>
-<li>进入容器启动mysql,执行：<code>docker exec -it mysql-demo1</code>，接着下图操作执行</li>
-<li><img src="/images/20210709015648.png"></li>
-<li>再次使用Navicate尝试连接，提示连接成功</li>
-<li>如下图：</li>
-<li><img src="/images/20210709020057.png"></li>
-</ul>
-</blockquote>
-</li>
+<h3 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h3><ol>
+<li>在src目录下新建 <code>fruits.json</code>文件，写入以下内容：<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"fruits"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Apple"</span><span class="token punctuation">,</span>
+      <span class="token property">"price"</span><span class="token operator">:</span> <span class="token number">8</span><span class="token punctuation">,</span>
+      <span class="token property">"currency"</span><span class="token operator">:</span> <span class="token string">"￥"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Banana"</span><span class="token punctuation">,</span>
+      <span class="token property">"price"</span><span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+      <span class="token property">"currency"</span><span class="token operator">:</span> <span class="token string">"￥"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Grapes"</span><span class="token punctuation">,</span>
+      <span class="token property">"price"</span><span class="token operator">:</span> <span class="token number">6</span><span class="token punctuation">,</span>
+      <span class="token property">"currency"</span><span class="token operator">:</span> <span class="token string">"￥"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"id"</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Mango"</span><span class="token punctuation">,</span>
+      <span class="token property">"price"</span><span class="token operator">:</span> <span class="token number">12</span><span class="token punctuation">,</span>
+      <span class="token property">"currency"</span><span class="token operator">:</span> <span class="token string">"￥"</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>修改<code>App.jsx</code>文件内容：<pre class="line-numbers language-jsx" data-language="jsx"><code class="language-jsx"><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span>
+<span class="token keyword">import</span> <span class="token string">'./App.css'</span>
+<span class="token keyword">import</span> fruitsData <span class="token keyword">from</span> <span class="token string">'./fruits.json'</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">downloadFile</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> data<span class="token punctuation">,</span> fileName<span class="token punctuation">,</span> fileType <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> blob <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Blob</span><span class="token punctuation">(</span><span class="token punctuation">[</span>data<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> type<span class="token operator">:</span> fileType <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword">const</span> a <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span>
+  a<span class="token punctuation">.</span>download <span class="token operator">=</span> fileName
+  a<span class="token punctuation">.</span>href <span class="token operator">=</span> window<span class="token punctuation">.</span><span class="token constant">URL</span><span class="token punctuation">.</span><span class="token function">createObjectURL</span><span class="token punctuation">(</span>blob<span class="token punctuation">)</span>
+  <span class="token keyword">const</span> clickEvt <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MouseEvent</span><span class="token punctuation">(</span><span class="token string">'click'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    view<span class="token operator">:</span> window<span class="token punctuation">,</span>
+    bubbles<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    cancelable<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  a<span class="token punctuation">.</span><span class="token function">dispatchEvent</span><span class="token punctuation">(</span>clickEvt<span class="token punctuation">)</span>
+  a<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">exportToJson</span> <span class="token operator">=</span> <span class="token parameter">e</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  e<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token function">downloadFile</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    data<span class="token operator">:</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>fruitsData<span class="token punctuation">.</span>fruits<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    fileName<span class="token operator">:</span> <span class="token string">'fruits.json'</span><span class="token punctuation">,</span>
+    fileType<span class="token operator">:</span> <span class="token string">'text/json'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">exportToCsv</span> <span class="token operator">=</span> <span class="token parameter">e</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  e<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">let</span> headers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'Id, Name, Price, Currency'</span><span class="token punctuation">]</span>
+  <span class="token comment">// 将数据转换为csv格式</span>
+  <span class="token keyword">let</span> fruitsCsv <span class="token operator">=</span> fruitsData<span class="token punctuation">.</span>fruits<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">acc<span class="token punctuation">,</span> fruit</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span> id<span class="token punctuation">,</span> name<span class="token punctuation">,</span> price<span class="token punctuation">,</span> currency <span class="token punctuation">}</span> <span class="token operator">=</span> fruit
+    acc<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">[</span>id<span class="token punctuation">,</span> name<span class="token punctuation">,</span> price<span class="token punctuation">,</span> currency<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> acc
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+  <span class="token function">downloadFile</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    data<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token operator">...</span>headers<span class="token punctuation">,</span> <span class="token operator">...</span>fruitsCsv<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'\n'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    fileName<span class="token operator">:</span> <span class="token string">'users.csv'</span><span class="token punctuation">,</span>
+    fileType<span class="token operator">:</span> <span class="token string">'text/csv'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>App<span class="token punctuation">'</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">在React项目中下载JSON和CSV文件</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>table</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>fruitsTable<span class="token punctuation">'</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>thead</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+          </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>tr</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+            </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>th</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">ID</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>th</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+            </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>th</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Name</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>th</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+            </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>th</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Price</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>th</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+            </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>th</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">Currency</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>th</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+          </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>tr</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>thead</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>tbody</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+          </span><span class="token punctuation">{</span>fruitsData<span class="token punctuation">.</span>fruits<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">fruit</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token keyword">const</span> <span class="token punctuation">{</span> id<span class="token punctuation">,</span> name<span class="token punctuation">,</span> price<span class="token punctuation">,</span> currency <span class="token punctuation">}</span> <span class="token operator">=</span> fruit
+            <span class="token keyword">return</span> <span class="token punctuation">(</span>
+              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>tr</span> <span class="token attr-name">key</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>id<span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+                </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>td</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>id<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>td</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+                </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>td</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>name<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>td</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+                </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>td</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>price<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>td</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+                </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>td</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">{</span>currency<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>td</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+              </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>tr</span><span class="token punctuation">&gt;</span></span>
+            <span class="token punctuation">)</span>
+          <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>tbody</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>table</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>actionBtns<span class="token punctuation">'</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>button<span class="token punctuation">'</span></span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>exportToJson<span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+          Export to JSON
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">'</span>button<span class="token punctuation">'</span></span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>exportToCsv<span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+          Export to CSV
+        </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> App<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>修改<code>App.css</code>文件：<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.App</span> <span class="token punctuation">{</span>
+  <span class="token property">max-width</span><span class="token punctuation">:</span> 60rem<span class="token punctuation">;</span>
+  <span class="token property">margin</span><span class="token punctuation">:</span> 2rem auto<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">.fruitsTable th,
+.fruitsTable td</span> <span class="token punctuation">{</span>
+  <span class="token property">padding</span><span class="token punctuation">:</span> 0.4rem 0.6rem<span class="token punctuation">;</span>
+  <span class="token property">text-align</span><span class="token punctuation">:</span> left<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">.actionBtns</span> <span class="token punctuation">{</span>
+  <span class="token property">margin-top</span><span class="token punctuation">:</span> 1rem<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">.actionBtns button + button</span> <span class="token punctuation">{</span>
+  <span class="token property">margin-left</span><span class="token punctuation">:</span> 1rem<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>查看页面：<a target="_blank" rel="noopener" href="http://localhost:3000/">http://localhost:3000</a><br><img src="/images/QQ%E6%88%AA%E5%9B%BE20211204195111.png"></li>
 </ol>
-</blockquote>
-<h3 id="三、结尾"><a href="#三、结尾" class="headerlink" title="三、结尾"></a>三、结尾</h3><blockquote>
-<p>更过关于Docker的介绍和用法请查阅相关资料：</p>
-<blockquote>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://www.docker.com/">Docker官网</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/docker">Docker官方github</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.docker.org.cn/index.html">Docker资源 - docker中文社区</a></li>
-</ol>
-</blockquote>
-</blockquote>
 
                 
             </div>
@@ -483,7 +584,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xiaosenmao.github.io/2021/07/10/centos-xi-tong-zhong-shi-yong-docker-qi-dong-mysql/">https://xiaosenmao.github.io/2021/07/10/centos-xi-tong-zhong-shi-yong-docker-qi-dong-mysql/</a>
+                    <a href="https://xiaosenmao.github.io/2021/12/04/zai-react-xiang-mu-zhong-xia-zai-json-wen-jian-he-csv-wen-jian/">https://xiaosenmao.github.io/2021/12/04/zai-react-xiang-mu-zhong-xia-zai-json-wen-jian-he-csv-wen-jian/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -521,12 +622,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Docker/">
-                                    <span class="chip bg-color">Docker</span>
+                                <a href="/tags/React/">
+                                    <span class="chip bg-color">React</span>
                                 </a>
                             
-                                <a href="/tags/MySQL/">
-                                    <span class="chip bg-color">MySQL</span>
+                                <a href="/tags/URL/">
+                                    <span class="chip bg-color">URL</span>
                                 </a>
                             
                         </div>
@@ -696,17 +797,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/07/10/docker-qi-dong-mongodb-rong-qi/">
+                <a href="/2021/12/04/zai-react-xiang-mu-zhong-xia-zai-json-wen-jian-he-csv-wen-jian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Docker启动MongoDB容器">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="在React项目中下载JSON文件和CSV文件">
                         
-                        <span class="card-title">Docker启动MongoDB容器</span>
+                        <span class="card-title">在React项目中下载JSON文件和CSV文件</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -716,30 +818,31 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-04
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Docker/" class="post-category">
-                                    Docker
+                            <a href="/categories/FrontEnd/" class="post-category">
+                                    FrontEnd
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Docker/">
-                        <span class="chip bg-color">Docker</span>
+                    <a href="/tags/React/">
+                        <span class="chip bg-color">React</span>
                     </a>
                     
-                    <a href="/tags/MongoDB/">
-                        <span class="chip bg-color">MongoDB</span>
+                    <a href="/tags/URL/">
+                        <span class="chip bg-color">URL</span>
                     </a>
                     
                 </div>
@@ -753,13 +856,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/07/10/di-yi-pian-bo-ke/">
+                <a href="/2021/08/21/apache-de-xu-ni-zhu-ji-gong-neng/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="第一篇博客">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Apache的虚拟主机功能">
                         
-                        <span class="card-title">第一篇博客</span>
+                        <span class="card-title">Apache的虚拟主机功能</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -770,15 +873,31 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-08-21
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            XiaoSenMao
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CentOS/">
+                        <span class="chip bg-color">CentOS</span>
+                    </a>
+                    
+                    <a href="/tags/Apache/">
+                        <span class="chip bg-color">Apache</span>
+                    </a>
+                    
                 </div>
                 
             </div>
